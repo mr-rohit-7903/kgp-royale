@@ -1,4 +1,4 @@
-// src/components/hero/PekkaCanvas.tsx
+
 import { useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, useGLTF } from "@react-three/drei";
@@ -20,7 +20,7 @@ function PekkaModel() {
     <group
       ref={groupRef}
       position={[0, baseY, 0]}
-      rotation={[-0.3, 0, 0]}   // 👈 tilt slightly upward
+      rotation={[-0.3, 0, 0]}  
       scale={[1.3, 1.3, 1.3]}
     >
       <primitive object={scene} />

@@ -3,16 +3,14 @@
 @tailwind utilities;
 
 /* Import Supercell-style fonts */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap'); */
 
 /* Custom Clash Royale Style Font */
 @font-face {
-  font-family: 'YouBlockhead';
-  src: url('/fonts/YouBlockheadWeb.woff2') format('woff2'),
-       url('/fonts/YouBlockheadWeb.woff') format('woff');
+  font-family: "ClashRegular";
+  src: url("/fonts/Clash_regular.otf") format("opentype");
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
 }
 
 @layer base {
@@ -104,19 +102,29 @@
   }
 
   h1, h2, h3, h4, h5, h6, .font-title {
-    font-family: 'YouBlockhead', 'Bangers', 'Comic Sans MS', cursive, sans-serif;
+    font-family: 'ClashRegular', 'Bangers', 'Comic Sans MS', cursive, sans-serif;
+    letter-spacing: 0.09em;
   }
 }
 
 @layer components {
   .cr-title {
-    font-family: 'YouBlockhead', 'Bangers', 'Comic Sans MS', cursive, sans-serif;
+    font-family: 'ClashRegular', 'Bangers', 'Comic Sans MS', cursive, sans-serif;
     text-shadow: 
       4px 4px 0 hsl(var(--navy-dark)),
       -1px -1px 0 hsl(var(--navy-dark)),
       1px -1px 0 hsl(var(--navy-dark)),
       -1px 1px 0 hsl(var(--navy-dark));
     letter-spacing: 0.05em;
+  }
+  .cr-title-bottom {
+    font-family: 'ClashRegular', 'Bangers', 'Comic Sans MS', cursive, sans-serif;
+    text-shadow: 
+      4px 4px 0 hsl(var(--navy-dark)),
+      -1px -1px 0 hsl(var(--navy-dark)),
+      1px -1px 0 hsl(var(--navy-dark)),
+      -1px 1px 0 hsl(var(--navy-dark));
+    letter-spacing: 0.27em;
   }
 
   .cr-card {
@@ -203,6 +211,11 @@
       0 0 40px hsl(var(--neon-pink));
     color: hsl(var(--neon-pink));
   }
+  
+  .shadow-glow-elixir {
+    box-shadow: 0 0 20px rgba(146, 39, 255, 0.35), 0 0 40px rgba(146, 39, 255, 0.25);
+  }
+
 
   .troop-card {
     background: var(--gradient-card);
@@ -222,7 +235,7 @@
   }
 
   .troop-card:hover {
-    transform: scale(1.05) rotate(2deg);
+    transform: scale(1.05);
     box-shadow: 0 0 30px hsl(var(--gold) / 0.5);
   }
 

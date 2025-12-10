@@ -1,6 +1,7 @@
 import { Trophy, Crown, Search, Medal } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const leaderboardData = [
   { rank: 1, name: "DragonSlayer", clan: "KGP Legends", trophies: 7823, avatar: "👑" },
@@ -26,18 +27,6 @@ const getRankStyle = (rank: number) => {
   }
 };
 
-const getRankBadge = (rank: number) => {
-  switch (rank) {
-    case 1:
-      return <Crown className="w-6 h-6 text-accent" />;
-    case 2:
-      return <Medal className="w-6 h-6 text-gray-300" />;
-    case 3:
-      return <Medal className="w-6 h-6 text-orange-500" />;
-    default:
-      return <span className="font-title text-lg text-muted-foreground">#{rank}</span>;
-  }
-};
 
 const LeaderboardSection = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -61,17 +50,6 @@ const LeaderboardSection = () => {
         </div>
 
         <div className="max-w-3xl mx-auto">
-          {/* Search Bar */}
-          <div className="relative mb-8">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-            <Input
-              type="text"
-              placeholder="Search player or clan..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-12 h-14 bg-secondary border-2 border-border focus:border-primary font-body text-lg"
-            />
-          </div>
 
           {/* Leaderboard */}
           <div className="cr-card overflow-hidden">
@@ -93,7 +71,7 @@ const LeaderboardSection = () => {
                   className={`px-6 py-4 grid grid-cols-12 gap-4 items-center transition-colors hover:bg-secondary/50 ${getRankStyle(player.rank)}`}
                 >
                   <div className="col-span-1 flex items-center">
-                    {getRankBadge(player.rank)}
+                    <span className="font-title text-lg text-muted-foreground">#{player.rank}</span>
                   </div>
                   <div className="col-span-5 flex items-center gap-3">
                     <span className="text-2xl">{player.avatar}</span>
@@ -109,18 +87,17 @@ const LeaderboardSection = () => {
               ))}
             </div>
           </div>
-
-          {/* Trophy legend */}
-          <div className="flex justify-center gap-6 mt-6 text-sm text-muted-foreground font-body">
-            <div className="flex items-center gap-2">
-              <Crown className="w-4 h-4 text-accent" /> Champion
-            </div>
-            <div className="flex items-center gap-2">
-              <Medal className="w-4 h-4 text-gray-300" /> Runner-up
-            </div>
-            <div className="flex items-center gap-2">
-              <Medal className="w-4 h-4 text-orange-500" /> Third Place
-            </div>
+          <div className="flex justify-center mt-6">
+            <Link to="/leaderboard">
+              <Button
+                size="lg"
+                variant="royal"
+                className="font-title text-lg px-8 py-6 group"
+              >
+                <Trophy className="mr-2 w-5 h-5 group-hover:rotate-12 transition-transform" />
+                View Leaderboard
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

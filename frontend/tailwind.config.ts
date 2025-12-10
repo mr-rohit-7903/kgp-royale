@@ -14,7 +14,7 @@ export default {
     },
     extend: {
       fontFamily: {
-        title: ["YouBlockhead", "Bangers", "Comic Sans MS", "cursive", "sans-serif"],
+        title: ["ClashRegular", "Bangers", "Comic Sans MS", "cursive", "sans-serif"],
         body: ["Montserrat", "Poppins", "sans-serif"],
       },
       colors: {

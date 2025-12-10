@@ -1,13 +1,19 @@
 import { Crown, Swords, Shield, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import PekkaCanvas from "../models/Pekka"; // ⬅️ add this import
+import PekkaCanvas from "../models/Pekka"; 
+import GolemCanvas from "../models/Golem"; 
 
 const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Background image from public/herobg.png */}
+        <div
+          className="absolute inset-0 bg-center bg-cover opacity-20 pointer-events-none"
+          style={{ backgroundImage: `url('/herobg.png')` }}
+        />
         {/* Elixir glow effects */}
         <div className="absolute top-1/4 left-10 w-64 h-64 bg-elixir/20 rounded-full blur-3xl animate-pulse" />
         <div
@@ -18,49 +24,25 @@ const HeroSection = () => {
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse"
           style={{ animationDelay: "0.5s" }}
         />
-
-        {/* Floating crowns */}
-        <Crown
-          className="absolute top-20 left-[15%] w-8 h-8 text-accent/30 animate-float"
-          style={{ animationDelay: "0s" }}
-        />
-        <Crown
-          className="absolute top-40 right-[20%] w-6 h-6 text-accent/20 animate-float"
-          style={{ animationDelay: "0.5s" }}
-        />
-        <Swords
-          className="absolute bottom-32 left-[25%] w-10 h-10 text-primary/20 animate-float"
-          style={{ animationDelay: "1s" }}
-        />
-        <Shield
-          className="absolute bottom-40 right-[15%] w-8 h-8 text-elixir/20 animate-float"
-          style={{ animationDelay: "1.5s" }}
-        />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Split hero into text + 3D model */}
         <div className="grid lg:grid-cols-2 gap-10 items-center">
           {/* LEFT: Text content */}
-          <div className="text-center lg:text-left max-w-2xl mx-auto lg:mx-0">
-            {/* Crown decoration */}
-            <div className="flex justify-center lg:justify-start mb-6">
-              <div className="relative">
-                <Crown className="w-20 h-20 md:w-28 md:h-28 text-accent animate-float drop-shadow-[0_0_20px_hsl(var(--gold)/0.5)]" />
-                <div className="absolute inset-0 bg-accent/20 blur-2xl rounded-full" />
-              </div>
-            </div>
+          <div className="text-center lg:text-left max-w-2xl mx-auto lg:mx-0 pl-10">
 
             {/* Main Title */}
-            <h1 className="font-title text-5xl sm:text-6xl md:text-7xl lg:text-8xl cr-title mb-4">
+            <h1 className="font-title text-5xl sm:text-6xl md:text-7xl lg:text-8xl cr-title mb-[-10px]">
               <span className="text-foreground">KGP</span>{" "}
               <span className="text-accent">ROYALE</span>
             </h1>
+            <h2 className="text-3xl sm-4xl cr-title-bottom mb-4">Technology clash club</h2>
 
             {/* Elixir bar decoration */}
             <div className="flex justify-center lg:justify-start mb-6">
               <div className="w-64 md:w-80 h-3 bg-secondary rounded-full overflow-hidden border-2 border-elixir/50">
-                <div className="elixir-bar h-full w-3/4" />
+                <div className="elixir-bar h-full w-3/4" /> 
               </div>
             </div>
 
@@ -109,46 +91,12 @@ const HeroSection = () => {
                 Leaderboard
               </Button>
             </div>
-
-            {/* Stats row */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-6 md:gap-10">
-              {[
-                {
-                  icon: Crown,
-                  value: "500+",
-                  label: "Warriors",
-                  color: "text-accent",
-                },
-                {
-                  icon: Swords,
-                  value: "100+",
-                  label: "Battles",
-                  color: "text-primary",
-                },
-                {
-                  icon: Shield,
-                  value: "50+",
-                  label: "Tournaments",
-                  color: "text-elixir",
-                },
-              ].map((stat, i) => (
-                <div key={i} className="cr-card px-6 py-4 flex items-center gap-4">
-                  <stat.icon className={`w-8 h-8 ${stat.color}`} />
-                  <div className="text-left">
-                    <p className="font-title text-2xl md:text-3xl text-foreground">
-                      {stat.value}
-                    </p>
-                    <p className="text-sm text-muted-foreground">{stat.label}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
 
           {/* RIGHT: 3D P.E.K.K.A */}
           <div className="relative">
             <div className="absolute -inset-8 bg-accent/10 blur-3xl rounded-full pointer-events-none" />
-            <PekkaCanvas />
+            <GolemCanvas />
           </div>
         </div>
       </div>

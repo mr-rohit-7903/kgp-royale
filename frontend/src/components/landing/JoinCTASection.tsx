@@ -1,6 +1,7 @@
-import { Crown, MessageCircle, Users, Copy, Check } from "lucide-react";
+import { Crown, MessageCircle, Users, Copy, Check, Instagram } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+
 
 const JoinCTASection = () => {
   const [copied, setCopied] = useState(false);
@@ -60,7 +61,7 @@ const JoinCTASection = () => {
 
           {/* Social Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
+            {/* <Button
               variant="royal"
               size="lg"
               className="font-title text-lg px-8 py-6"
@@ -68,7 +69,8 @@ const JoinCTASection = () => {
             >
               <MessageCircle className="mr-2 w-5 h-5" />
               Join Discord
-            </Button>
+            </Button> */}
+
             <Button
               variant="outline"
               size="lg"
@@ -76,9 +78,20 @@ const JoinCTASection = () => {
               onClick={() => window.open("https://wa.me/example", "_blank")}
             >
               <Users className="mr-2 w-5 h-5" />
-              WhatsApp Group
+              WhatsApp
+            </Button>
+
+            <Button
+              variant="outline"
+              size="lg"
+              className="font-title text-lg px-8 py-6 border-pink-500 text-pink-500 hover:bg-pink-500/10"
+              onClick={() => window.open("https://instagram.com/example", "_blank")}
+            >
+              <Instagram className="mr-2 w-5 h-5" />
+              Instagram
             </Button>
           </div>
+
         </div>
       </div>
     </section>

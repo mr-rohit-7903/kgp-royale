@@ -5,7 +5,6 @@ import LeaderboardSection from "@/components/landing/LeaderboardSection";
 import HallOfFameSection from "@/components/landing/HallOfFameSection";
 import WhyJoinSection from "@/components/landing/WhyJoinSection";
 import GallerySection from "@/components/landing/GallerySection";
-import TeamSection from "@/components/landing/TeamSection";
 import JoinCTASection from "@/components/landing/JoinCTASection";
 
 const Index = () => {
@@ -18,7 +17,6 @@ const Index = () => {
       <HallOfFameSection />
       <WhyJoinSection />
       <GallerySection />
-      <TeamSection />
       <JoinCTASection />
     </div>
   );
