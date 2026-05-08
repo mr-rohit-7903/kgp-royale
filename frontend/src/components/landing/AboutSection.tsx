@@ -1,7 +1,7 @@
-import { Trophy, Crown, Swords, TrendingUp, Gift } from "lucide-react";
+import { Crown, Swords, TrendingUp, Gift } from "lucide-react";
 
 const highlights = [
-  { icon: Trophy, text: "Weekly Tournaments", color: "text-accent" },
+  { icon: ({className}: {className?: string}) => <img src="/assets/Trophy.png" alt="Trophy" className={className + " object-contain"} />, text: "Weekly Tournaments", color: "text-accent" },
   { icon: Crown, text: "College Clan Battles", color: "text-primary" },
   { icon: Swords, text: "Inter-college Cups", color: "text-neon-pink" },
   { icon: TrendingUp, text: "Seasonal Leaderboards", color: "text-elixir" },

@@ -1,4 +1,4 @@
-import { Trophy, Crown, Search, Medal } from "lucide-react";
+import { Crown, Search, Medal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -59,7 +59,7 @@ const LeaderboardSection = () => {
               <div className="col-span-5">Player</div>
               <div className="col-span-4">Clan</div>
               <div className="col-span-2 text-right">
-                <Trophy className="w-4 h-4 inline" />
+                <img src="/assets/Trophy.png" alt="Trophy" className="w-4 h-4 inline object-contain" />
               </div>
             </div>
 
@@ -94,7 +94,7 @@ const LeaderboardSection = () => {
                 variant="royal"
                 className="font-title text-lg px-8 py-6 group"
               >
-                <Trophy className="mr-2 w-5 h-5 group-hover:rotate-12 transition-transform" />
+                <img src="/assets/Trophy.png" alt="Trophy" className="mr-2 w-5 h-5 group-hover:rotate-12 transition-transform object-contain" />
                 View Leaderboard
               </Button>
             </Link>

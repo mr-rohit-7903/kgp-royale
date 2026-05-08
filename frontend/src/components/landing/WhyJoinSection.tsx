@@ -1,8 +1,8 @@
-import { Trophy, Gift, BookOpen, Users, Gamepad2 } from "lucide-react";
+import { Gift, BookOpen, Users, Gamepad2 } from "lucide-react";
 
 const benefits = [
   {
-    icon: Trophy,
+    icon: ({className}: {className?: string}) => <img src="/assets/Trophy.png" alt="Trophy" className={className + " object-contain"} />,
     title: "Competitive Gameplay",
     description: "Weekly & monthly tournaments with intense bracket matches",
     color: "text-accent",

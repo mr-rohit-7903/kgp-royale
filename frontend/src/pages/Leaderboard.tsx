@@ -1,6 +1,6 @@
 // src/pages/LeaderboardPage.tsx
 import React, { useMemo, useState } from "react";
-import { Trophy, Crown, Search, Medal, ChevronLeft, ChevronRight } from "lucide-react";
+import { Crown, Search, Medal, ChevronLeft, ChevronRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
 type Player = {
@@ -127,7 +127,7 @@ const LeaderboardPage: React.FC = () => {
 
             <div className="flex items-center gap-6">
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Trophy className="w-4 h-4" />
+                <img src="/assets/Trophy.png" alt="Trophy" className="w-4 h-4" />
                 <span><strong>{filtered.length}</strong> players</span>
               </div>
               <div className="text-sm text-muted-foreground">
@@ -145,7 +145,7 @@ const LeaderboardPage: React.FC = () => {
               <div className="col-span-1">Rank</div>
               <div className="col-span-5">Player</div>
               <div className="col-span-4">Clan</div>
-              <div className="col-span-2 text-right"><Trophy className="w-4 h-4 inline" /></div>
+              <div className="col-span-2 text-right"><img src="/assets/Trophy.png" alt="Trophy" className="w-4 h-4 inline" /></div>
             </div>
 
             {/* Rows */}

@@ -1,4 +1,4 @@
-import { Trophy, Crown, ChevronRight } from "lucide-react";
+import { Crown, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import MatchCard from "@/components/MatchCard";
@@ -26,11 +26,11 @@ const Tournament = () => {
         {/* Header */}
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-4 mb-4">
-            <Trophy className="w-10 h-10 md:w-12 md:h-12 text-accent animate-float" />
+            <img src="/assets/Trophy.png" alt="Trophy" className="w-10 h-10 md:w-12 md:h-12 animate-float object-contain" />
             <h1 className="font-title text-4xl md:text-5xl lg:text-6xl cr-title text-foreground">
               KGP Royale <span className="text-accent">Championship</span>
             </h1>
-            <Trophy className="w-10 h-10 md:w-12 md:h-12 text-accent animate-float" />
+            <img src="/assets/Trophy.png" alt="Trophy" className="w-10 h-10 md:w-12 md:h-12 animate-float object-contain" />
           </div>
           <p className="text-lg md:text-xl text-muted-foreground">
             Live Tournament Bracket
@@ -86,7 +86,7 @@ const Tournament = () => {
             <div className="flex-1">
               <div className="text-center mb-4">
                 <div className="inline-flex items-center gap-2 bg-gradient-to-r from-accent/20 to-gold-dark/20 px-4 py-2 rounded-xl border-2 border-accent">
-                  <Trophy className="w-4 h-4 text-accent" />
+                  <img src="/assets/Trophy.png" alt="Trophy" className="w-4 h-4 object-contain" />
                   <h2 className="font-title text-lg text-accent">Finals</h2>
                 </div>
               </div>
@@ -106,7 +106,7 @@ const Tournament = () => {
         <div className="text-center mt-12">
           <Link to="/upcoming">
             <Button variant="gold" size="lg" className="gap-3">
-              <Trophy className="w-5 h-5" />
+              <img src="/assets/Trophy.png" alt="Trophy" className="w-5 h-5 object-contain" />
               View Upcoming Tournaments
               <ChevronRight className="w-5 h-5" />
             </Button>

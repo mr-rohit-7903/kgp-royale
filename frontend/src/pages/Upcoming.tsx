@@ -1,10 +1,10 @@
-import { Calendar, Trophy, Swords, Crown, Star, ChevronRight, Home } from "lucide-react";
+import { Calendar, Swords, Crown, Star, ChevronRight, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
 const Upcoming = () => {
   const features = [
-    { icon: Trophy, text: "Weekly tournaments with exclusive rewards" },
+    { icon: ({className}: {className?: string}) => <img src="/assets/Trophy.png" alt="Trophy" className={className + " object-contain"} />, text: "Weekly tournaments with exclusive rewards" },
     { icon: Swords, text: "1v1 and 2v2 battle formats" },
     { icon: Crown, text: "Leaderboard rankings and trophies" },
     { icon: Star, text: "Special seasonal events and challenges" },

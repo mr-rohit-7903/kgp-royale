@@ -85,7 +85,7 @@ const HeroSection = () => {
               <Button
                 variant="outline"
                 size="lg"
-                className="font-title text-lg px-8 py-6 border-elixir text-elixir hover:bg-elixir/10 group"
+                className="font-title text-lg px-8 py-6 border-elixir text-elixir hover:bg-elixir group"
               >
                 <Zap className="mr-2 w-5 h-5 group-hover:animate-pulse" />
                 Leaderboard
@@ -93,7 +93,7 @@ const HeroSection = () => {
             </div>
           </div>
 
-          {/* RIGHT: 3D P.E.K.K.A */}
+          {/* RIGHT: 3D Golem*/}
           <div className="relative">
             <div className="absolute -inset-8 bg-accent/10 blur-3xl rounded-full pointer-events-none" />
             <GolemCanvas />

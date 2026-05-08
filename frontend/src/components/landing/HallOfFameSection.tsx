@@ -1,4 +1,4 @@
-import { Crown, Trophy, Star } from "lucide-react";
+import { Crown, Star } from "lucide-react";
 
 const champions = [
   {
@@ -102,7 +102,7 @@ const ChampionCard = ({ champion, position }: ChampionCardProps) => {
         {/* Stats */}
         <div className="flex justify-center gap-4 text-sm">
           <div className="flex items-center gap-1">
-            <Trophy className="w-4 h-4 text-accent" />
+            <img src="/assets/Trophy.png" alt="Trophy" className="w-4 h-4 object-contain" />
             <span className="text-foreground font-semibold">{champion.trophies}</span>
           </div>
           <div className="flex items-center gap-1">

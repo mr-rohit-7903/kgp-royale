@@ -1,17 +1,24 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Crown, Menu, X } from "lucide-react";
+import { Menu, X, LogOut, User } from "lucide-react";
 import { useState } from "react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Navbar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { user, profile, signOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate("/login");
+  };
 
   const navLinks = [
     { path: "/", label: "Home" },
     { path: "/upcoming", label: "Tournament" },
     { path: "/team", label: "Team" },
-    { path: "/login", label: "Login" },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -22,7 +29,6 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
-            
             <span className="hidden sm:block font-title text-xl md:text-2xl text-foreground cr-title">
               KGP <span className="text-accent">ROYALE</span>
             </span>
@@ -40,6 +46,37 @@ const Navbar = () => {
                 </Button>
               </Link>
             ))}
+
+            {user ? (
+              <div className="flex items-center gap-2 ml-2">
+                <Link to="/user/profile">
+                  <Button
+                    variant={isActive("/user/profile") ? "navActive" : "nav"}
+                    className="font-title text-base flex items-center gap-1.5"
+                  >
+                    <User className="w-4 h-4" />
+                    {profile?.playerName || "Profile"}
+                  </Button>
+                </Link>
+                <Button
+                  variant="nav"
+                  className="font-title text-base"
+                  onClick={handleSignOut}
+                >
+                  <LogOut className="w-4 h-4 mr-1" />
+                  Logout
+                </Button>
+              </div>
+            ) : (
+              <Link to="/login">
+                <Button
+                  variant={isActive("/login") ? "navActive" : "nav"}
+                  className="font-title text-base"
+                >
+                  Login
+                </Button>
+              </Link>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -71,6 +108,48 @@ const Navbar = () => {
                 </Button>
               </Link>
             ))}
+
+            {user ? (
+              <>
+                <Link
+                  to="/user/profile"
+                  onClick={() => setIsOpen(false)}
+                  className="block"
+                >
+                  <Button
+                    variant={isActive("/user/profile") ? "navActive" : "nav"}
+                    className="w-full justify-start font-title"
+                  >
+                    <User className="w-4 h-4 mr-2" />
+                    {profile?.playerName || "Profile"}
+                  </Button>
+                </Link>
+                <Button
+                  variant="nav"
+                  className="w-full justify-start font-title"
+                  onClick={() => {
+                    handleSignOut();
+                    setIsOpen(false);
+                  }}
+                >
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Logout
+                </Button>
+              </>
+            ) : (
+              <Link
+                to="/login"
+                onClick={() => setIsOpen(false)}
+                className="block"
+              >
+                <Button
+                  variant={isActive("/login") ? "navActive" : "nav"}
+                  className="w-full justify-start font-title"
+                >
+                  Login
+                </Button>
+              </Link>
+            )}
           </div>
         )}
       </div>

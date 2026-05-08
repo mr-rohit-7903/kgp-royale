@@ -1,27 +1,48 @@
-// src/pages/LoginPage.tsx
+// src/pages/auth/Login.tsx
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import GolemCanvas from "@/components/models/Golem";
+import { useAuth } from "@/contexts/AuthContext";
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
+  const { signIn } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPass, setShowPass] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+
     if (!email || !password) {
       setError("Please enter both email and password.");
       return;
     }
 
-    // TODO: replace with real API call
-    console.log("LOGIN", { email, password });
-    // fake success -> navigate to dashboard or profile
-    navigate("/"); // change as needed
+    if (!email.toLowerCase().endsWith("@kgpian.iitkgp.ac.in")) {
+      setError("Only @kgpian.iitkgp.ac.in emails are allowed.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      await signIn(email, password);
+      navigate("/user/profile");
+    } catch (err: any) {
+      // Map Firebase error codes to friendly messages
+      const code = err?.code || "";
+      if (code === "auth/user-not-found" || code === "auth/wrong-password" || code === "auth/invalid-credential") {
+        setError("Invalid email or password.");
+      } else if (code === "auth/too-many-requests") {
+        setError("Too many failed attempts. Please try again later.");
+      } else {
+        setError(err?.message || "Login failed. Please try again.");
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -32,27 +53,19 @@ const LoginPage: React.FC = () => {
         style={{ backgroundImage: `url('/herobg.png')` }}
       />
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-          {/* LEFT: Branding + 3D Golem */}
-          <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
-            <div className="mb-6">
-              <h1 className="font-title text-5xl md:text-6xl cr-title">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          {/* RIGHT: Login Form */}
+          <div className="mx-auto w-full max-w-md order-2 lg:order-2">
+            <div className="mb-8 text-center lg:text-left">
+              <h1 className="font-title text-4xl md:text-5xl cr-title">
                 <span className="text-foreground">KGP</span>{" "}
                 <span className="text-accent">ROYALE</span>
               </h1>
-              <p className="mt-2 text-muted-foreground max-w-lg">
-                Welcome back — sign in to your clan, manage decks, and join tournaments.
+              <p className="mt-2 text-muted-foreground text-sm">
+                Welcome back — sign in to manage decks and join tournaments.
               </p>
             </div>
 
-            {/* <div className="w-full max-w-md mx-auto lg:mx-0">
-              <GolemCanvas />
-            </div> */}
-
-          </div>
-
-          {/* RIGHT: Login Form */}
-          <div className="mx-auto w-full max-w-md mt-14">
             <div className="cr-card champion-frame-gold p-8">
               <h2 className="font-title text-2xl mb-4">Sign in</h2>
 
@@ -66,7 +79,7 @@ const LoginPage: React.FC = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="mt-2 w-full px-4 py-3 rounded-md bg-secondary border border-border focus:border-primary"
-                    placeholder="you@example.com"
+                    placeholder="you@kgpian.iitkgp.ac.in"
                     required
                   />
                 </label>
@@ -93,31 +106,17 @@ const LoginPage: React.FC = () => {
 
                 <button
                   type="submit"
-                  className="w-full bg-accent text-navy-dark font-title py-3 rounded-xl text-lg hover:scale-[1.02] transition"
+                  disabled={loading}
+                  className="w-full bg-accent text-navy-dark font-title py-3 rounded-xl text-lg hover:scale-[1.02] transition disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Sign in
+                  {loading ? "Signing in…" : "Sign in"}
                 </button>
 
-                <div className="text-center mt-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      // demo quick-login (remove in production)
-                      setEmail("demo@kgproyale.test");
-                      setPassword("password123");
-                    }}
-                    className="text-sm text-muted-foreground underline"
-                  >
-                    Quick demo login
-                  </button>
-                </div>
+                <p className="text-xs text-muted-foreground text-center mt-2">
+                  Only <span className="text-accent font-semibold">@kgpian.iitkgp.ac.in</span> emails are accepted.
+                </p>
               </form>
 
-              <div className="mt-4 text-center text-sm text-muted-foreground">
-                <Link to="/forgot" className="underline">
-                  Forgot password?
-                </Link>
-              </div>
               <div className="mt-6 text-sm text-muted-foreground">
                 New here?{" "}
                 <Link to="/register" className="text-accent underline">
@@ -125,6 +124,16 @@ const LoginPage: React.FC = () => {
                 </Link>
               </div>
             </div>
+          </div>
+
+          {/* LEFT: Image */}
+          <div className="hidden lg:flex items-center justify-center order-1 lg:order-1 relative">
+            <div className="absolute inset-0 bg-accent/20 rounded-full blur-3xl" />
+            <img 
+              src="/assets/auth_screen.png" 
+              alt="Clash Royale Characters" 
+              className="relative z-10 w-full max-w-lg object-contain drop-shadow-[0_0_30px_rgba(255,200,0,0.3)] animate-float"
+            />
           </div>
         </div>
       </div>
