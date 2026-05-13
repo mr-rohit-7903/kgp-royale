@@ -63,6 +63,29 @@
     --sidebar-accent-foreground: 215 28% 17%;
     --sidebar-border: 214 32% 91%;
     --sidebar-ring: 258 90% 66%;
+
+    /* Clash Royale Specific Palette */
+    --navy: 222 47% 11%; /* #0F172A */
+    --navy-dark: 222 47% 4%; /* #020617 */
+    --gold: 45 100% 50%; /* #FFD700 */
+    --gold-dark: 35 100% 40%;
+    --elixir: 295 100% 50%; /* #D946EF */
+    --elixir-dark: 295 100% 30%;
+    --neon-pink: 329 86% 70%;
+    --royal-blue: 210 100% 50%;
+
+    /* Gradients */
+    --gradient-card: linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(210 40% 98%) 100%);
+    --gradient-wood: linear-gradient(180deg, hsl(30 50% 45%) 0%, hsl(30 50% 25%) 100%);
+    --gradient-arena: radial-gradient(circle at center, hsl(215 28% 25%) 0%, hsl(215 28% 10%) 100%);
+
+    /* Shadows */
+    --shadow-chunky: 0 8px 0 hsl(215 28% 10%);
+    --shadow-gold: 0 8px 0 hsl(35 100% 30%);
+    --shadow-elixir: 0 8px 0 hsl(295 100% 25%);
+    --shadow-glow-gold: 0 0 15px hsl(45 100% 50% / 0.5);
+    --shadow-glow-blue: 0 0 15px hsl(210 100% 50% / 0.5);
+    --shadow-glow-elixir: 0 0 15px hsl(295 100% 50% / 0.5);
   }
 }
 
