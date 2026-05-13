@@ -48,12 +48,42 @@
     --quaternary: 158 64% 52%; /* Emerald/Mint #34D399 */
     
     --radius: 1rem;
-    
+
+    /* Clash Royale Game Colors */
+    --gold: 43 96% 56%;
+    --gold-dark: 36 90% 45%;
+
+    --royal-blue: 210 100% 50%;
+    --royal-blue-dark: 210 100% 35%;
+
+    --navy: 222 47% 11%;
+    --navy-dark: 222 47% 4%;
+
+    --elixir: 270 100% 58%;
+    --elixir-dark: 270 100% 42%;
+
+    --neon-blue: 210 100% 60%;
+    --neon-pink: 329 86% 70%;
+
+    /* Gradients */
+    --gradient-card: linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(210 40% 96%) 100%);
+    --gradient-wood: linear-gradient(135deg, hsl(30 60% 40%) 0%, hsl(30 50% 28%) 100%);
+    --gradient-arena: linear-gradient(135deg, hsl(222 47% 11%) 0%, hsl(210 100% 15%) 100%);
+
     /* Playful Hard Shadows */
     --shadow-hard: 4px 4px 0px 0px hsl(215 28% 17%);
     --shadow-hard-hover: 6px 6px 0px 0px hsl(215 28% 17%);
     --shadow-hard-active: 2px 2px 0px 0px hsl(215 28% 17%);
     --shadow-soft-hard: 8px 8px 0px 0px hsl(214 32% 91%);
+
+    /* Game-Themed Shadows */
+    --shadow-chunky: 6px 6px 0px 0px hsl(222 47% 4%);
+    --shadow-gold: 4px 4px 0px 0px hsl(36 90% 35%);
+    --shadow-blue: 4px 4px 0px 0px hsl(210 100% 30%);
+    --shadow-glow-gold: 0 0 20px hsl(43 96% 56% / 0.4);
+    --shadow-glow-blue: 0 0 20px hsl(210 100% 50% / 0.4);
+    --shadow-elixir: 4px 4px 0px 0px hsl(270 100% 35%);
+    --shadow-glow-elixir: 0 0 20px hsl(270 100% 58% / 0.4);
     
     --sidebar-background: 0 0% 100%;
     --sidebar-foreground: 215 28% 17%;
