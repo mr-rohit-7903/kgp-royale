@@ -3,8 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { Swords, Mail, Lock, User, Crown } from "lucide-react";
+
 import { toast } from "@/hooks/use-toast";
+import { GiCrossedSwords } from "react-icons/gi";
+import { FaCrown, FaEnvelope, FaLock } from "react-icons/fa";
+
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -45,11 +48,11 @@ const AuthForm = () => {
     <div className="cr-card p-6 md:p-8 w-full max-w-md">
       {/* Header */}
       <div className="flex items-center justify-center gap-3 mb-6">
-        <Swords className="w-8 h-8 text-accent" />
+        <span className="inline-flex items-center justify-center text-inherit">⚔️</span>
         <h2 className="font-title text-2xl md:text-3xl text-foreground">
           {isLogin ? "Login" : "Register"}
         </h2>
-        <Swords className="w-8 h-8 text-accent transform scale-x-[-1]" />
+        <span className="inline-flex items-center justify-center text-inherit">⚔️</span>
       </div>
 
       {/* Toggle */}
@@ -71,7 +74,7 @@ const AuthForm = () => {
       <form onSubmit={handleSubmit} className="space-y-5">
         <div className="space-y-2">
           <Label htmlFor="email" className="text-foreground font-body flex items-center gap-2">
-            <Mail className="w-4 h-4 text-accent" />
+            <span className="inline-flex items-center justify-center text-inherit">✉️</span>
             Email
           </Label>
           <Input
@@ -86,7 +89,7 @@ const AuthForm = () => {
 
         <div className="space-y-2">
           <Label htmlFor="password" className="text-foreground font-body flex items-center gap-2">
-            <Lock className="w-4 h-4 text-accent" />
+            <span className="inline-flex items-center justify-center text-inherit">🔒</span>
             Password
           </Label>
           <Input
@@ -102,7 +105,7 @@ const AuthForm = () => {
         {!isLogin && (
           <div className="space-y-2 animate-in slide-in-from-top duration-300">
             <Label htmlFor="username" className="text-foreground font-body flex items-center gap-2">
-              <Crown className="w-4 h-4 text-accent" />
+              <span className="inline-flex items-center justify-center text-inherit">👑</span>
               Clash Royale Username
             </Label>
             <Input
@@ -122,7 +125,7 @@ const AuthForm = () => {
           size="lg"
           className="w-full mt-6"
         >
-          <Swords className="w-5 h-5" />
+          <span className="inline-flex items-center justify-center text-inherit">⚔️</span>
           {isLogin ? "Battle In!" : "Join the Clan!"}
         </Button>
       </form>

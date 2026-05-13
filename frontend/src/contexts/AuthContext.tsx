@@ -24,7 +24,7 @@ interface AuthContextType {
   loading: boolean;
   profileLoading: boolean;
   signIn: (email: string, password: string) => Promise<void>;
-  signUp: (email: string, password: string, playerTag: string, clashData?: ClashPlayerData) => Promise<void>;
+  signUp: (email: string, password: string, playerTag: string, hall: string, clashData?: ClashPlayerData) => Promise<void>;
   signOut: () => Promise<void>;
   refreshProfile: () => Promise<void>;
 }
@@ -91,7 +91,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  const signUp = async (email: string, password: string, playerTag: string, clashData?: ClashPlayerData) => {
+  const signUp = async (email: string, password: string, playerTag: string, hall: string, clashData?: ClashPlayerData) => {
     validateEmailDomain(email);
     const credential = await createUserWithEmailAndPassword(
       auth,
@@ -106,6 +106,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         credential.user.uid,
         email,
         playerTag,
+        hall,
         clashData
       );
       setProfile(newProfile);

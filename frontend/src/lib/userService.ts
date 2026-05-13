@@ -12,9 +12,15 @@ import {
   updateDoc,
   serverTimestamp,
   Timestamp,
+  collection,
+  query,
+  orderBy,
+  limit,
+  getDocs,
+  where,
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import { fetchPlayerData, ClashPlayerData } from "@/lib/clashApi";
+import { fetchPlayerData, ClashPlayerData, normalizeTag } from "@/lib/clashApi";
 
 export interface UserProfile {
   // Firebase Auth fields
@@ -43,6 +49,9 @@ export interface UserProfile {
   clanName: string;
   clanTag: string;
   role: string;
+
+  // Hall of Residence
+  hall: string;
 
   // Arena
   arenaName: string;
@@ -79,6 +88,7 @@ function emptyProfile(uid: string, email: string, playerTag: string): UserProfil
     clanName: "",
     clanTag: "",
     role: "",
+    hall: "",
     arenaName: "",
     favouriteCardName: "",
     favouriteCardIcon: "",
@@ -122,18 +132,21 @@ export async function createUserProfile(
   uid: string,
   email: string,
   playerTag: string,
+  hall: string,
   prefetchedClashData?: ClashPlayerData
 ): Promise<UserProfile> {
-  const profile = emptyProfile(uid, email, playerTag);
+  const normalized = `#${normalizeTag(playerTag)}`;
+  const profile = { ...emptyProfile(uid, email, normalized), hall };
 
   // Use pre-fetched data if provided, otherwise fetch from API
-  const clash = prefetchedClashData ?? await fetchPlayerData(playerTag);
+  const clash = prefetchedClashData ?? await fetchPlayerData(normalized);
   const clashFields = clash ? mapClashData(clash) : {};
 
   const docData = {
     ...profile,
     ...clashFields,
-    playerTag, // always keep the raw tag
+    playerTag: normalized,
+    hall,
     createdAt: serverTimestamp(),
     lastUpdated: serverTimestamp(),
     lastLoginAt: serverTimestamp(),
@@ -151,6 +164,28 @@ export async function getUserProfile(uid: string): Promise<UserProfile | null> {
   const snap = await getDoc(doc(db, "users", uid));
   if (!snap.exists()) return null;
   return snap.data() as UserProfile;
+}
+
+/**
+ * Fetch user profile from Firestore by playerTag.
+ */
+export async function getProfileByTag(tag: string): Promise<UserProfile | null> {
+  const cleanTag = normalizeTag(tag);
+  const tagged = `#${cleanTag}`;
+  
+  const usersRef = collection(db, "users");
+  
+  // Search for the tag with the # prefix first (standard)
+  const q1 = query(usersRef, where("playerTag", "==", tagged), limit(1));
+  const snap1 = await getDocs(q1);
+  if (!snap1.empty) return snap1.docs[0].data() as UserProfile;
+
+  // Fallback: search for the tag without the # prefix
+  const q2 = query(usersRef, where("playerTag", "==", cleanTag), limit(1));
+  const snap2 = await getDocs(q2);
+  if (!snap2.empty) return snap2.docs[0].data() as UserProfile;
+  
+  return null;
 }
 
 /**
@@ -179,4 +214,15 @@ export async function refreshPlayerStats(uid: string): Promise<UserProfile | nul
   });
 
   return { ...existing, ...clashFields };
+}
+
+/**
+ * Fetch top players for the leaderboard.
+ */
+export async function getTopPlayers(count: number = 8): Promise<UserProfile[]> {
+  const usersRef = collection(db, "users");
+  const q = query(usersRef, orderBy("trophies", "desc"), limit(count));
+  const querySnapshot = await getDocs(q);
+  
+  return querySnapshot.docs.map(doc => doc.data() as UserProfile);
 }

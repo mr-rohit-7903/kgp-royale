@@ -1,51 +1,45 @@
-import { Crown, Swords, TrendingUp, Gift } from "lucide-react";
+import { FaChartLine, FaCrown, FaGift } from "react-icons/fa";
+import { GiCrossedSwords } from "react-icons/gi";
+
 
 const highlights = [
-  { icon: ({className}: {className?: string}) => <img src="/assets/Trophy.png" alt="Trophy" className={className + " object-contain"} />, text: "Weekly Tournaments", color: "text-accent" },
-  { icon: Crown, text: "College Clan Battles", color: "text-primary" },
-  { icon: Swords, text: "Inter-college Cups", color: "text-neon-pink" },
-  { icon: TrendingUp, text: "Seasonal Leaderboards", color: "text-elixir" },
-  { icon: Gift, text: "Prizes, Badges & Rewards", color: "text-accent" },
+  { icon: ({className}: {className?: string}) => <span className={className + " text-2xl flex items-center justify-center"}>🏆</span>, text: "Weekly Tournaments", color: "bg-[hsl(var(--tertiary))]" },
+  { icon: ({className}: {className?: string}) => <FaCrown className={(className || "") + " "} />, text: "Clan Wars", color: "bg-[hsl(var(--primary))]" },
+  { icon: ({className}: {className?: string}) => <GiCrossedSwords className={(className || "") + " "} />, text: "Inter-Hall Tournaments", color: "bg-[hsl(var(--secondary))]" },
+  { icon: ({className}: {className?: string}) => <FaChartLine className={(className || "") + " "} />, text: "Leaderboards", color: "bg-[hsl(var(--quaternary))]" },
+  { icon: ({className}: {className?: string}) => <FaGift className={(className || "") + " "} />, text: "Prizes & Rewards", color: "bg-[hsl(var(--primary))]" },
 ];
 
 const AboutSection = () => {
   return (
-    <section className="py-20 relative">
-      <div className="container mx-auto px-4">
-        {/* Section Title */}
-        <div className="text-center mb-12">
-          <h2 className="font-title text-4xl md:text-6xl cr-title mb-4">
-            <span className="text-foreground">About</span>{" "}
-            <span className="text-accent">KGP Royale</span>
+    <section className="py-20 relative overflow-hidden">
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="text-center mb-16">
+          <h2 className="font-outfit font-extrabold text-5xl md:text-6xl text-foreground mb-4 drop-shadow-[2px_2px_0px_white]">
+            About <span className="text-primary">KGP Royale</span>
           </h2>
-          <div className="section-divider w-48 mx-auto" />
+          <div className="w-32 h-4 bg-tertiary mx-auto rounded-full border-2 border-foreground shadow-hard" />
         </div>
 
         <div className="max-w-4xl mx-auto">
-          {/* Description Card */}
-          <div className="cr-card p-8 mb-12">
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed text-center font-body">
-              <span className="text-accent font-semibold">KGP Royale</span> is the official Clash Royale club of{" "}
-              <span className="text-primary font-semibold">IIT Kharagpur</span>, bringing together students who love 
-              strategy, esports, and competitive gaming. Our arena welcomes all — from{" "}
-              <span className="text-foreground">beginners</span> to{" "}
-              <span className="text-accent">trophy hunters</span>.
+          <div className="bg-card border-4 border-foreground rounded-2xl shadow-soft-hard p-8 mb-16 transform -rotate-1 hover:rotate-0 transition-transform">
+            <p className="text-xl md:text-2xl text-foreground font-medium leading-relaxed text-center font-jakarta">
+              <span className="text-primary font-bold">KGP Royale</span> is the official Clash Royale club of{" "}
+              <span className="text-secondary font-bold">IIT Kharagpur</span>, bringing together students who love 
+              strategy, esports, and competitive gaming. Our arena welcomes all.
             </p>
           </div>
 
-          {/* Highlights Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
             {highlights.map((item, index) => (
               <div
                 key={index}
-                className="cr-card p-6 text-center group hover:border-accent/50 transition-colors"
+                className="bg-card border-2 border-foreground rounded-xl shadow-hard p-6 text-center group hover:-translate-y-1 hover:shadow-hard-hover transition-all flex flex-col items-center"
               >
-                <div className="flex justify-center mb-4">
-                  <div className={`w-14 h-14 rounded-full bg-secondary flex items-center justify-center group-hover:scale-110 transition-transform`}>
-                    <item.icon className={`w-7 h-7 ${item.color}`} />
-                  </div>
+                <div className={`w-16 h-16 rounded-full ${item.color} border-2 border-foreground shadow-hard flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-transform mb-4`}>
+                  <item.icon className="w-8 h-8 text-white" />
                 </div>
-                <p className="font-body font-semibold text-foreground text-sm">{item.text}</p>
+                <p className="font-jakarta font-bold text-foreground text-sm uppercase tracking-wide">{item.text}</p>
               </div>
             ))}
           </div>

@@ -1,49 +1,54 @@
-import { Calendar, Swords, Crown, Star, ChevronRight, Home } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { GiCrossedSwords } from "react-icons/gi";
+import { FaCalendar, FaChevronRight, FaCrown, FaHome, FaStar } from "react-icons/fa";
+
 
 const Upcoming = () => {
   const features = [
-    { icon: ({className}: {className?: string}) => <img src="/assets/Trophy.png" alt="Trophy" className={className + " object-contain"} />, text: "Weekly tournaments with exclusive rewards" },
-    { icon: Swords, text: "1v1 and 2v2 battle formats" },
-    { icon: Crown, text: "Leaderboard rankings and trophies" },
-    { icon: Star, text: "Special seasonal events and challenges" },
+    { icon: ({className}: {className?: string}) => <span className={className + " text-xl flex items-center justify-center"}>🏆</span>, text: "Weekly tournaments with exclusive rewards" },
+    { icon: ({className}: {className?: string}) => <GiCrossedSwords className={(className || "") + " "} />, text: "1v1 and 2v2 battle formats" },
+    { icon: ({className}: {className?: string}) => <FaCrown className={(className || "") + " "} />, text: "Leaderboard rankings and trophies" },
+    { icon: ({className}: {className?: string}) => <FaStar className={(className || "") + " "} />, text: "Special seasonal events and challenges" },
   ];
 
   return (
-    <div className="min-h-screen arena-bg pt-24 md:pt-28 pb-16">
-      <div className="container mx-auto px-4">
+    <div className="min-h-screen pt-24 md:pt-28 pb-16 overflow-hidden relative">
+      {/* Decorative Geometric Background Shapes */}
+      <div className="absolute top-20 left-[-10%] w-96 h-96 bg-[hsl(var(--secondary))] rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-pulse" />
+      <div className="absolute bottom-10 right-[-5%] w-80 h-80 bg-[hsl(var(--tertiary))] rounded-full mix-blend-multiply filter blur-3xl opacity-40" />
+
+      <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-16">
           <div className="flex items-center justify-center gap-4 mb-6">
-            <Calendar className="w-10 h-10 md:w-12 md:h-12 text-accent animate-float" />
+            <div className="w-20 h-20 bg-primary rounded-full border-4 border-foreground shadow-hard flex items-center justify-center animate-bounce-subtle">
+              <span className="inline-flex items-center justify-center text-inherit">📅</span>
+            </div>
           </div>
-          <h1 className="font-title text-4xl md:text-5xl lg:text-6xl cr-title text-foreground mb-4">
-            Stay <span className="text-accent">Tuned!</span>
+          <h1 className="font-outfit font-extrabold text-5xl md:text-6xl text-foreground mb-4 drop-shadow-[2px_2px_0px_white]">
+            Stay <span className="text-secondary">Tuned!</span>
           </h1>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-muted-foreground font-jakarta font-medium max-w-2xl mx-auto bg-white p-4 rounded-xl border-2 border-slate-200 shadow-sm">
             Exciting tournaments are coming your way. Get ready to clash with the best players from IIT Kharagpur!
           </p>
         </div>
 
         {/* Main Card */}
         <div className="max-w-2xl mx-auto">
-          <div className="cr-card p-6 md:p-10 relative overflow-hidden">
-            {/* Decorative glow */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2/3 h-1 bg-gradient-to-r from-transparent via-accent to-transparent" />
+          <div className="bg-card border-4 border-foreground rounded-[2rem] shadow-soft-hard p-8 md:p-12 relative overflow-hidden transform hover:-translate-y-1 transition-transform">
             
             {/* Content */}
-            <div className="relative">
-              <div className="flex items-center justify-center mb-8">
-                <div className="flex items-center gap-4">
-                  <div className="h-0.5 w-12 bg-gradient-to-r from-transparent to-accent" />
-                  <Crown className="w-8 h-8 text-accent" />
-                  <div className="h-0.5 w-12 bg-gradient-to-l from-transparent to-accent" />
-                </div>
+            <div className="relative z-10">
+              <div className="flex items-center justify-center mb-8 gap-4">
+                <div className="w-12 h-2 bg-secondary rounded-full border-2 border-foreground" />
+                <span className="inline-flex items-center justify-center text-inherit">👑</span>
+                <div className="w-12 h-2 bg-tertiary rounded-full border-2 border-foreground" />
               </div>
 
-              <h2 className="font-title text-2xl md:text-3xl text-center text-foreground mb-8">
-                Upcoming <span className="text-accent">Features</span>
+              <h2 className="font-outfit font-extrabold text-3xl md:text-4xl text-center text-foreground mb-8 uppercase tracking-wide">
+                Upcoming <span className="text-primary">Features</span>
               </h2>
 
               {/* Features List */}
@@ -51,54 +56,46 @@ const Upcoming = () => {
                 {features.map((feature, i) => (
                   <li
                     key={i}
-                    className="flex items-center gap-4 p-4 bg-secondary/30 rounded-xl border-2 border-border hover:border-accent/50 transition-colors"
+                    className="flex items-center gap-4 p-4 bg-muted rounded-xl border-2 border-slate-200 hover:border-foreground hover:shadow-hard transition-all group"
                   >
-                    <div className="w-10 h-10 rounded-lg bg-accent/20 flex items-center justify-center">
-                      <feature.icon className="w-5 h-5 text-accent" />
+                    <div className="w-12 h-12 rounded-full bg-white border-2 border-foreground shadow-sm flex items-center justify-center flex-shrink-0 group-hover:bg-primary group-hover:text-white transition-colors">
+                      <feature.icon className="w-6 h-6 text-foreground group-hover:text-white transition-colors" />
                     </div>
-                    <span className="text-foreground font-body">{feature.text}</span>
+                    <span className="text-foreground font-jakarta font-bold text-lg">{feature.text}</span>
                   </li>
                 ))}
               </ul>
 
               {/* Announcement */}
-              <div className="text-center mb-8 p-4 bg-primary/20 rounded-xl border-2 border-primary/30">
-                <p className="text-muted-foreground">
-                  <span className="text-accent font-semibold">Next Tournament:</span>
-                  <br />
-                  <span className="text-lg text-foreground font-title">Coming Soon!</span>
+              <div className="text-center mb-10 p-6 bg-[hsl(var(--tertiary))] rounded-2xl border-4 border-foreground shadow-hard transform rotate-1 hover:rotate-0 transition-transform">
+                <p className="text-foreground font-jakarta font-bold text-lg mb-2">
+                  Next Tournament:
+                </p>
+                <p className="text-4xl text-white font-outfit font-black drop-shadow-[2px_2px_0px_black] uppercase tracking-widest">
+                  Coming Soon!
                 </p>
               </div>
 
               {/* CTA */}
               <Link to="/" className="block">
-                <Button variant="gold" size="lg" className="w-full gap-3">
-                  <Home className="w-5 h-5" />
-                  Go to Home & Register
-                  <ChevronRight className="w-5 h-5" />
+                <Button variant="default" size="xl" className="w-full gap-3 text-xl bg-primary">
+                  <span className="inline-flex items-center justify-center text-inherit">🏠</span>
+                  Go to Home
+                  <span className="inline-flex items-center justify-center text-inherit">▶</span>
                 </Button>
               </Link>
             </div>
-
-            {/* Bottom decorative */}
-            <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-accent/50 to-transparent" />
           </div>
         </div>
 
         {/* Bottom decorations */}
-        <div className="mt-12 flex justify-center">
-          <div className="flex items-center gap-3">
-            <Swords className="w-6 h-6 text-accent/40 rotate-45" />
-            <div className="flex gap-2">
-              {[...Array(5)].map((_, i) => (
-                <div
-                  key={i}
-                  className="w-2 h-2 rounded-full bg-accent"
-                  style={{ opacity: 0.2 + i * 0.15 }}
-                />
-              ))}
-            </div>
-            <Swords className="w-6 h-6 text-accent/40 -rotate-45 scale-x-[-1]" />
+        <div className="mt-16 flex justify-center pb-8">
+          <div className="flex items-center gap-4">
+            <div className="w-4 h-4 rounded-full bg-primary border-2 border-foreground shadow-sm" />
+            <div className="w-6 h-6 rounded-full bg-secondary border-2 border-foreground shadow-sm" />
+            <div className="w-8 h-8 rounded-full bg-tertiary border-2 border-foreground shadow-sm animate-bounce-subtle" />
+            <div className="w-6 h-6 rounded-full bg-quaternary border-2 border-foreground shadow-sm" />
+            <div className="w-4 h-4 rounded-full bg-primary border-2 border-foreground shadow-sm" />
           </div>
         </div>
       </div>

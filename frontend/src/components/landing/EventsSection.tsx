@@ -1,43 +1,45 @@
 import { useState } from "react";
-import { ChevronLeft, ChevronRight, Calendar, Users } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { FaChartLine, FaCrown, FaGift, FaCalendar, FaChevronLeft, FaChevronRight, FaUsers } from "react-icons/fa";
+import { GiCrossedSwords } from "react-icons/gi";
 
 const events = [
   {
-    title: "Arena Royale",
-    subtitle: "Weekly Battles",
-    description: "Test your skills in weekly 1v1 combat",
-    color: "from-primary to-royal-dark",
-    icon: "⚔️",
+    title: "Weekly Tournaments",
+    subtitle: "Arena Battles",
+    description: "Every week, battle for glory and climb the ranks in our 1v1 arena.",
+    color: "bg-[hsl(var(--tertiary))]",
+    icon: (props: any) => <span {...props} className={props.className + " text-6xl flex items-center justify-center"}>🏆</span>,
   },
   {
-    title: "Draft Frenzy Night",
-    subtitle: "Random Deck Challenge",
-    description: "Build your deck from scratch with random picks",
-    color: "from-elixir to-elixir-dark",
-    icon: "🎲",
+    title: "Clan Wars",
+    subtitle: "Coordinate & Conquer",
+    description: "Work with your clanmates to dominate the river race and earn rewards.",
+    color: "bg-[hsl(var(--primary))]",
+    icon: FaCrown,
   },
   {
-    title: "2v2 Battle Blitz",
-    subtitle: "Team Up & Dominate",
-    description: "Partner with a teammate and crush opponents",
-    color: "from-accent to-gold-dark",
-    icon: "👥",
+    title: "Inter-Hall Tournaments",
+    subtitle: "Represent Your Hall",
+    description: "The ultimate rivalry! Fight for your hall of residence and claim bragging rights.",
+    color: "bg-[hsl(var(--secondary))]",
+    icon: GiCrossedSwords,
   },
   {
-    title: "KGP Clan Wars",
-    subtitle: "Inter-Hall Competition",
-    description: "Represent your hall in epic clan battles",
-    color: "from-neon-pink to-destructive",
-    icon: "🏰",
+    title: "Leaderboards",
+    subtitle: "Track Your Progress",
+    description: "See where you stand among the best players in IIT Kharagpur.",
+    color: "bg-[hsl(var(--quaternary))]",
+    icon: FaChartLine,
   },
   {
-    title: "Legend League",
-    subtitle: "Championship Finals",
-    description: "The ultimate showdown for the top players",
-    color: "from-accent via-primary to-elixir",
-    icon: "👑",
+    title: "Prizes & Rewards",
+    subtitle: "Win Big",
+    description: "Amazing prizes, exclusive roles, and in-game rewards for top performers.",
+    color: "bg-[hsl(var(--primary))]",
+    icon: FaGift,
   },
 ];
 
@@ -54,14 +56,13 @@ const EventsSection = () => {
 
   return (
     <section className="py-20 relative overflow-hidden">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 relative z-10">
         {/* Section Title */}
         <div className="text-center mb-12">
-          <h2 className="font-title text-4xl md:text-6xl cr-title mb-4">
-            <span className="text-foreground">Featured</span>{" "}
-            <span className="text-elixir">Events</span>
+          <h2 className="font-outfit font-extrabold text-5xl md:text-6xl text-foreground mb-4 drop-shadow-[2px_2px_0px_white]">
+            Featured <span className="text-primary">Events</span>
           </h2>
-          <div className="section-divider w-48 mx-auto" />
+          <div className="w-32 h-4 bg-secondary mx-auto rounded-full border-2 border-foreground shadow-hard" />
         </div>
 
         {/* Carousel */}
@@ -69,48 +70,50 @@ const EventsSection = () => {
           {/* Navigation Buttons */}
           <button
             onClick={prevSlide}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 z-10 w-12 h-12 rounded-full bg-secondary border-2 border-border flex items-center justify-center hover:border-accent transition-colors"
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 z-20 w-14 h-14 rounded-full bg-white border-2 border-foreground shadow-hard flex items-center justify-center hover:bg-tertiary hover:shadow-hard-hover active:translate-y-[calc(-50%+2px)] active:shadow-hard-active transition-all"
           >
-            <ChevronLeft className="w-6 h-6 text-foreground" />
+            <span className="inline-flex items-center justify-center text-inherit">◀</span>
           </button>
           <button
             onClick={nextSlide}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 z-10 w-12 h-12 rounded-full bg-secondary border-2 border-border flex items-center justify-center hover:border-accent transition-colors"
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 z-20 w-14 h-14 rounded-full bg-white border-2 border-foreground shadow-hard flex items-center justify-center hover:bg-tertiary hover:shadow-hard-hover active:translate-y-[calc(-50%+2px)] active:shadow-hard-active transition-all"
           >
-            <ChevronRight className="w-6 h-6 text-foreground" />
+            <span className="inline-flex items-center justify-center text-inherit">▶</span>
           </button>
 
           {/* Event Cards */}
-          <div className="overflow-hidden">
+          <div className="overflow-hidden p-4">
             <div
-              className="flex transition-transform duration-500 ease-out"
+              className="flex items-stretch transition-transform duration-500 ease-out"
               style={{ transform: `translateX(-${currentIndex * 100}%)` }}
             >
               {events.map((event, index) => (
-                <div key={index} className="w-full flex-shrink-0 px-4">
-                  <div className={`cr-card overflow-hidden`}>
-                    <div className={`bg-gradient-to-r ${event.color} p-8 md:p-12`}>
+                <div key={index} className="w-full flex-shrink-0 px-2 h-auto">
+                  <div className={`bg-card border-4 border-foreground rounded-[2rem] shadow-soft-hard overflow-hidden h-full flex flex-col`}>
+                    <div className={`${event.color} p-8 md:p-12 text-white border-b-4 border-foreground h-full flex flex-col justify-center`}>
                       <div className="flex items-center justify-between">
                         <div>
-                          <span className="text-6xl mb-4 block">{event.icon}</span>
-                          <h3 className="font-title text-3xl md:text-4xl text-foreground mb-2">
+                          <div className="text-6xl mb-6 block drop-shadow-md">
+                            <event.icon className="w-16 h-16 text-white" />
+                          </div>
+                          <h3 className="font-outfit font-bold text-4xl md:text-5xl mb-2 drop-shadow-[2px_2px_0px_rgba(0,0,0,0.5)]">
                             {event.title}
                           </h3>
-                          <p className="text-lg text-foreground/80 font-semibold mb-2">
+                          <p className="text-xl font-bold uppercase tracking-wide mb-2 opacity-90 drop-shadow-[1px_1px_0px_rgba(0,0,0,0.3)]">
                             {event.subtitle}
                           </p>
-                          <p className="text-foreground/70 font-body">
+                          <p className="font-jakarta text-lg font-medium opacity-95">
                             {event.description}
                           </p>
                         </div>
-                        <div className="hidden md:flex flex-col gap-4">
-                          <div className="flex items-center gap-2 text-foreground/80">
-                            <Calendar className="w-5 h-5" />
-                            <span className="font-body">Every Week</span>
+                        <div className="hidden md:flex flex-col gap-4 bg-white/20 p-6 rounded-2xl backdrop-blur-sm border-2 border-white/50">
+                          <div className="flex items-center gap-3 font-jakarta font-bold text-lg">
+                            <span className="inline-flex items-center justify-center text-inherit">📅</span>
+                            <span>Every Week</span>
                           </div>
-                          <div className="flex items-center gap-2 text-foreground/80">
-                            <Users className="w-5 h-5" />
-                            <span className="font-body">32+ Players</span>
+                          <div className="flex items-center gap-3 font-jakarta font-bold text-lg">
+                            <span className="inline-flex items-center justify-center text-inherit">👥</span>
+                            <span>32+ Players</span>
                           </div>
                         </div>
                       </div>
@@ -122,28 +125,19 @@ const EventsSection = () => {
           </div>
 
           {/* Dots */}
-          <div className="flex justify-center gap-2 mt-6">
+          <div className="flex justify-center gap-3 mt-6">
             {events.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentIndex(index)}
-                className={`w-3 h-3 rounded-full transition-all ${
+                className={`w-4 h-4 rounded-full border-2 border-foreground transition-all ${
                   index === currentIndex
-                    ? "bg-accent w-8"
-                    : "bg-secondary hover:bg-muted"
+                    ? "bg-primary w-10 shadow-hard"
+                    : "bg-white shadow-sm hover:bg-tertiary"
                 }`}
               />
             ))}
           </div>
-        </div>
-
-        {/* View All Button */}
-        <div className="text-center mt-10">
-          <Link to="/upcoming">
-            <Button variant="outline" size="lg" className="font-title border-accent text-accent hover:bg-accent/10">
-              View All Events
-            </Button>
-          </Link>
         </div>
       </div>
     </section>

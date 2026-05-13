@@ -1,8 +1,10 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, LogOut, User } from "lucide-react";
+
 import { useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
+import { FaBars, FaTimes, FaUser } from "react-icons/fa";
+
 
 const Navbar = () => {
   const location = useLocation();
@@ -10,10 +12,7 @@ const Navbar = () => {
   const { user, profile, signOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleSignOut = async () => {
-    await signOut();
-    navigate("/login");
-  };
+
 
   const navLinks = [
     { path: "/", label: "Home" },
@@ -24,13 +23,13 @@ const Navbar = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-navy/95 backdrop-blur-sm border-b-4 border-accent/30">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background border-b-4 border-foreground shadow-sm">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 group">
-            <span className="hidden sm:block font-title text-xl md:text-2xl text-foreground cr-title">
-              KGP <span className="text-accent">ROYALE</span>
+            <span className="hidden sm:block font-outfit font-extrabold text-2xl md:text-3xl tracking-tight text-foreground">
+              KGP <span className="text-primary">ROYALE</span>
             </span>
           </Link>
 
@@ -40,7 +39,7 @@ const Navbar = () => {
               <Link key={link.path} to={link.path}>
                 <Button
                   variant={isActive(link.path) ? "navActive" : "nav"}
-                  className="font-title text-base"
+                  className="font-outfit text-base"
                 >
                   {link.label}
                 </Button>
@@ -52,26 +51,18 @@ const Navbar = () => {
                 <Link to="/user/profile">
                   <Button
                     variant={isActive("/user/profile") ? "navActive" : "nav"}
-                    className="font-title text-base flex items-center gap-1.5"
+                    className="font-outfit text-base flex items-center gap-1.5"
                   >
-                    <User className="w-4 h-4" />
+                    <span className="inline-flex items-center justify-center text-inherit">👤</span>
                     {profile?.playerName || "Profile"}
                   </Button>
                 </Link>
-                <Button
-                  variant="nav"
-                  className="font-title text-base"
-                  onClick={handleSignOut}
-                >
-                  <LogOut className="w-4 h-4 mr-1" />
-                  Logout
-                </Button>
               </div>
             ) : (
               <Link to="/login">
                 <Button
                   variant={isActive("/login") ? "navActive" : "nav"}
-                  className="font-title text-base"
+                  className="font-outfit text-base"
                 >
                   Login
                 </Button>
@@ -86,13 +77,13 @@ const Navbar = () => {
             className="md:hidden text-foreground"
             onClick={() => setIsOpen(!isOpen)}
           >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {isOpen ? <span className="inline-flex items-center justify-center text-inherit">❌</span> : <span className="inline-flex items-center justify-center text-inherit">☰</span>}
           </Button>
         </div>
 
         {/* Mobile Nav */}
         {isOpen && (
-          <div className="md:hidden pb-4 space-y-2 animate-in slide-in-from-top duration-200">
+          <div className="md:hidden pb-4 space-y-2 animate-in slide-in-from-top duration-200 bg-background border-t-2 border-foreground mt-2 px-2 pt-2 rounded-b-xl shadow-soft-hard">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
@@ -110,32 +101,19 @@ const Navbar = () => {
             ))}
 
             {user ? (
-              <>
-                <Link
-                  to="/user/profile"
-                  onClick={() => setIsOpen(false)}
-                  className="block"
-                >
-                  <Button
-                    variant={isActive("/user/profile") ? "navActive" : "nav"}
-                    className="w-full justify-start font-title"
-                  >
-                    <User className="w-4 h-4 mr-2" />
-                    {profile?.playerName || "Profile"}
-                  </Button>
-                </Link>
+              <Link
+                to="/user/profile"
+                onClick={() => setIsOpen(false)}
+                className="block"
+              >
                 <Button
-                  variant="nav"
+                  variant={isActive("/user/profile") ? "navActive" : "nav"}
                   className="w-full justify-start font-title"
-                  onClick={() => {
-                    handleSignOut();
-                    setIsOpen(false);
-                  }}
                 >
-                  <LogOut className="w-4 h-4 mr-2" />
-                  Logout
+                  <span className="inline-flex items-center justify-center text-inherit">👤</span>
+                  {profile?.playerName || "Profile"}
                 </Button>
-              </>
+              </Link>
             ) : (
               <Link
                 to="/login"

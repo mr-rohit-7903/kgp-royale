@@ -1,101 +1,129 @@
-import { Crown, Search, Medal } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import { Link } from "react-router-dom";
 
-const leaderboardData = [
-  { rank: 1, name: "DragonSlayer", clan: "KGP Legends", trophies: 7823, avatar: "👑" },
-  { rank: 2, name: "ElixirMaster", clan: "Arena Kings", trophies: 7654, avatar: "⚔️" },
-  { rank: 3, name: "RoyalKnight", clan: "KGP Legends", trophies: 7521, avatar: "🛡️" },
-  { rank: 4, name: "TowerCrusher", clan: "Battle Lords", trophies: 7398, avatar: "🏰" },
-  { rank: 5, name: "SpellCaster", clan: "Arena Kings", trophies: 7245, avatar: "✨" },
-  { rank: 6, name: "GolemMaster", clan: "KGP Legends", trophies: 7112, avatar: "🗿" },
-  { rank: 7, name: "HogRider99", clan: "Battle Lords", trophies: 6987, avatar: "🐗" },
-  { rank: 8, name: "PrinceFury", clan: "KGP Legends", trophies: 6854, avatar: "👸" },
-];
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { getTopPlayers, UserProfile } from "@/lib/userService";
 
 const getRankStyle = (rank: number) => {
   switch (rank) {
     case 1:
-      return "bg-gradient-to-r from-accent/20 to-transparent border-accent";
+      return "bg-[hsl(var(--tertiary))] text-foreground border-b-2 border-foreground";
     case 2:
-      return "bg-gradient-to-r from-gray-400/20 to-transparent border-gray-400";
+      return "bg-[hsl(var(--secondary))] text-white border-b-2 border-foreground";
     case 3:
-      return "bg-gradient-to-r from-orange-600/20 to-transparent border-orange-600";
+      return "bg-[hsl(var(--quaternary))] text-white border-b-2 border-foreground";
     default:
-      return "";
+      return "border-b-2 border-slate-200 hover:bg-muted";
   }
 };
 
 
 const LeaderboardSection = () => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [players, setPlayers] = useState<UserProfile[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const filteredData = leaderboardData.filter(
-    (player) =>
-      player.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      player.clan.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  useEffect(() => {
+    const fetchLeaderboard = async () => {
+      try {
+        const data = await getTopPlayers(8);
+        setPlayers(data);
+      } catch (error) {
+        console.error("Failed to fetch leaderboard:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchLeaderboard();
+  }, []);
 
   return (
     <section className="py-20 relative">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 relative z-10">
         {/* Section Title */}
         <div className="text-center mb-12">
-          <h2 className="font-title text-4xl md:text-6xl cr-title mb-4">
-            <span className="text-foreground">Live</span>{" "}
-            <span className="text-primary">Leaderboard</span>
+          <h2 className="font-outfit font-extrabold text-5xl md:text-6xl text-foreground mb-4 drop-shadow-[2px_2px_0px_white]">
+            Live <span className="text-primary">Leaderboard</span>
           </h2>
-          <div className="section-divider w-48 mx-auto" />
+          <div className="w-32 h-4 bg-primary mx-auto rounded-full border-2 border-foreground shadow-hard mt-4" />
         </div>
 
         <div className="max-w-3xl mx-auto">
 
           {/* Leaderboard */}
-          <div className="cr-card overflow-hidden">
+          <div className="bg-card border-4 border-foreground rounded-[2rem] shadow-soft-hard overflow-hidden">
             {/* Header */}
-            <div className="bg-secondary px-6 py-4 border-b-2 border-border grid grid-cols-12 gap-4 font-title text-sm text-muted-foreground">
+            <div className="bg-white px-6 py-4 border-b-4 border-foreground grid grid-cols-12 gap-4 font-outfit font-bold text-sm text-muted-foreground uppercase tracking-wider">
               <div className="col-span-1">Rank</div>
-              <div className="col-span-5">Player</div>
-              <div className="col-span-4">Clan</div>
+              <div className="col-span-4">Player</div>
+              <div className="col-span-2">Clan</div>
+              <div className="col-span-3">Hall</div>
               <div className="col-span-2 text-right">
-                <img src="/assets/Trophy.png" alt="Trophy" className="w-4 h-4 inline object-contain" />
+                <span>🏆</span>
               </div>
             </div>
 
             {/* Rows */}
-            <div className="divide-y divide-border">
-              {filteredData.map((player) => (
-                <div
-                  key={player.rank}
-                  className={`px-6 py-4 grid grid-cols-12 gap-4 items-center transition-colors hover:bg-secondary/50 ${getRankStyle(player.rank)}`}
-                >
-                  <div className="col-span-1 flex items-center">
-                    <span className="font-title text-lg text-muted-foreground">#{player.rank}</span>
+            <div className="divide-y divide-border bg-white">
+              {loading ? (
+                Array.from({ length: 5 }).map((_, i) => (
+                  <div key={i} className="px-6 py-6 animate-pulse flex gap-4 items-center">
+                    <div className="w-8 h-8 bg-slate-100 rounded-full border-2 border-slate-200" />
+                    <div className="flex-1 space-y-2">
+                      <div className="h-4 bg-slate-100 rounded w-1/3" />
+                      <div className="h-3 bg-slate-50 rounded w-1/4" />
+                    </div>
                   </div>
-                  <div className="col-span-5 flex items-center gap-3">
-                    <span className="text-2xl">{player.avatar}</span>
-                    <span className="font-semibold text-foreground font-body">{player.name}</span>
-                  </div>
-                  <div className="col-span-4">
-                    <span className="text-muted-foreground font-body text-sm">{player.clan}</span>
-                  </div>
-                  <div className="col-span-2 text-right">
-                    <span className="font-title text-accent">{player.trophies.toLocaleString()}</span>
-                  </div>
+                ))
+              ) : players.length === 0 ? (
+                <div className="px-6 py-12 text-center">
+                  <p className="text-muted-foreground font-jakarta font-bold text-lg mb-2">The Arena is Empty!</p>
+                  <p className="text-sm text-muted-foreground opacity-70">Be the first to join the leaderboard.</p>
                 </div>
-              ))}
+              ) : (
+                players.map((player, index) => (
+                  <div
+                    key={player.uid}
+                    className={`px-6 py-4 grid grid-cols-12 gap-4 items-center transition-colors ${getRankStyle(index + 1)}`}
+                  >
+                    <div className="col-span-1 flex items-center">
+                      <span className="font-outfit font-black text-xl opacity-50">#{index + 1}</span>
+                    </div>
+                    <Link 
+                      to={`/profile/${player.playerTag.replace("#", "")}`}
+                      className="col-span-4 flex items-center gap-3 group cursor-pointer hover:translate-x-1 transition-transform"
+                    >
+                      <div className="w-12 h-12 flex-shrink-0 bg-white rounded-full border-2 border-foreground shadow-sm overflow-hidden flex items-center justify-center bg-gradient-to-br from-white to-slate-50 group-hover:scale-105 transition-transform">
+                        {player.favouriteCardIcon ? (
+                          <img src={player.favouriteCardIcon} alt={player.favouriteCardName} className="w-full h-full object-cover" />
+                        ) : (
+                          <span className="text-xl">🛡️</span>
+                        )}
+                      </div>
+                      <span className="font-bold font-jakarta text-lg truncate group-hover:text-primary transition-colors">{player.playerName}</span>
+                    </Link>
+                    <div className="col-span-2">
+                      <span className="font-jakarta font-medium text-sm truncate opacity-80">{player.clanName || "No Clan"}</span>
+                    </div>
+                    <div className="col-span-3">
+                      <span className="font-jakarta font-medium text-sm truncate opacity-80" title={player.hall}>{player.hall || "General"}</span>
+                    </div>
+                    <div className="col-span-2 text-right">
+                      <span className="font-outfit font-extrabold text-xl">{player.trophies.toLocaleString()}</span>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
-          <div className="flex justify-center mt-6">
+          <div className="flex justify-center mt-10">
             <Link to="/leaderboard">
               <Button
                 size="lg"
-                variant="royal"
-                className="font-title text-lg px-8 py-6 group"
+                variant="default"
+                className="font-outfit text-xl px-10 py-6 group bg-primary"
               >
-                <img src="/assets/Trophy.png" alt="Trophy" className="mr-2 w-5 h-5 group-hover:rotate-12 transition-transform object-contain" />
-                View Leaderboard
+                <span>🏆</span>
+                <span className="ml-2">View Full Board</span>
               </Button>
             </Link>
           </div>

@@ -1,108 +1,92 @@
-import { Crown, Swords, Shield, Zap } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import PekkaCanvas from "../models/Pekka"; 
-import GolemCanvas from "../models/Golem"; 
+import { FaBolt, FaCrown } from "react-icons/fa";
+import { GiCrossedSwords } from "react-icons/gi";
+
+
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Background image from public/herobg.png */}
-        <div
-          className="absolute inset-0 bg-center bg-cover opacity-20 pointer-events-none"
-          style={{ backgroundImage: `url('/herobg.png')` }}
-        />
-        {/* Elixir glow effects */}
-        <div className="absolute top-1/4 left-10 w-64 h-64 bg-elixir/20 rounded-full blur-3xl animate-pulse" />
-        <div
-          className="absolute bottom-1/4 right-10 w-80 h-80 bg-primary/20 rounded-full blur-3xl animate-pulse"
-          style={{ animationDelay: "1s" }}
-        />
-        <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse"
-          style={{ animationDelay: "0.5s" }}
-        />
-      </div>
+    <section className="relative min-h-[calc(100vh-80px)] flex items-center justify-center overflow-hidden pt-10">
+      {/* Playful Decorative Background Shapes */}
+      <div className="absolute top-10 left-10 w-32 h-32 bg-[hsl(var(--secondary))] rounded-full border-4 border-foreground shadow-hard animate-bounce-subtle" />
+      <div className="absolute bottom-20 right-10 w-48 h-48 bg-[hsl(var(--tertiary))] rounded-lg rotate-12 border-4 border-foreground shadow-hard" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[hsl(var(--primary))] rounded-full blur-3xl opacity-20 pointer-events-none" />
 
       <div className="container mx-auto px-4 relative z-10">
-        {/* Split hero into text + 3D model */}
         <div className="grid lg:grid-cols-2 gap-10 items-center">
           {/* LEFT: Text content */}
           <div className="text-center lg:text-left max-w-2xl mx-auto lg:mx-0 pl-10">
-
-            {/* Main Title */}
-            <h1 className="font-title text-5xl sm:text-6xl md:text-7xl lg:text-8xl cr-title mb-[-10px]">
-              <span className="text-foreground">KGP</span>{" "}
-              <span className="text-accent">ROYALE</span>
+            <h1 className="font-outfit font-extrabold text-6xl md:text-8xl text-foreground drop-shadow-[4px_4px_0px_white] mb-2">
+              KGP <span className="text-primary">ROYALE</span>
             </h1>
-            <h2 className="text-3xl sm-4xl cr-title-bottom mb-4">Technology clash club</h2>
+            <h2 className="font-outfit font-bold text-3xl md:text-4xl text-foreground mb-6">
+              Technology clash club
+            </h2>
 
-            {/* Elixir bar decoration */}
+            {/* Playful Divider */}
             <div className="flex justify-center lg:justify-start mb-6">
-              <div className="w-64 md:w-80 h-3 bg-secondary rounded-full overflow-hidden border-2 border-elixir/50">
-                <div className="elixir-bar h-full w-3/4" /> 
-              </div>
+              <div className="w-32 h-4 bg-tertiary rounded-full border-2 border-foreground shadow-hard" />
+              <div className="w-8 h-4 bg-secondary rounded-full border-2 border-foreground shadow-hard ml-2" />
+              <div className="w-4 h-4 bg-primary rounded-full border-2 border-foreground shadow-hard ml-2" />
             </div>
 
-            {/* Tagline */}
-            <p className="font-title text-xl md:text-2xl text-accent mb-4 tracking-wide">
+            <p className="font-outfit font-bold text-xl md:text-2xl text-primary mb-4 uppercase tracking-wider">
               The Clash Begins Here
             </p>
 
-            {/* Subtitle */}
-            <p className="text-base md:text-lg text-muted-foreground max-w-xl mx-auto lg:mx-0 mb-8 font-body leading-relaxed">
+            <p className="text-lg text-muted-foreground max-w-xl mx-auto lg:mx-0 mb-8 font-jakarta font-medium leading-relaxed bg-white border-2 border-foreground rounded-xl p-4 shadow-soft-hard transform -rotate-1 hover:rotate-0 transition-transform">
               Join the warriors of{" "}
-              <span className="text-primary font-semibold">IIT Kharagpur</span>{" "}
+              <span className="text-primary font-bold">IIT Kharagpur</span>{" "}
               in the ultimate strategy arena. Compete in tournaments, climb
               leaderboards, and become the next{" "}
-              <span className="text-accent font-semibold">legend</span>.
+              <span className="text-secondary font-bold">legend</span>.
             </p>
 
             {/* CTA Buttons */}
             <div className="flex flex-wrap justify-center lg:justify-start gap-4 mb-10">
-              <Link to="/upcoming">
-                <Button
-                  variant="gold"
-                  size="lg"
-                  className="font-title text-lg px-8 py-6 group"
-                >
-                  <Crown className="mr-2 w-5 h-5 group-hover:animate-bounce" />
-                  Join The Clan
-                </Button>
-              </Link>
+              <Button
+                variant="gold"
+                size="lg"
+                className="font-outfit text-lg px-8 py-6 group"
+                onClick={() => document.getElementById("join")?.scrollIntoView({ behavior: "smooth" })}
+              >
+                <span className="inline-flex items-center justify-center text-inherit">👑</span>
+                Join The Clan
+              </Button>
               <Link to="/tournament">
                 <Button
                   variant="royal"
                   size="lg"
-                  className="font-title text-lg px-8 py-6 group"
+                  className="font-outfit text-lg px-8 py-6 group"
                 >
-                  <Swords className="mr-2 w-5 h-5 group-hover:rotate-12 transition-transform" />
+                  <span className="inline-flex items-center justify-center text-inherit">⚔️</span>
                   View Tournament
                 </Button>
               </Link>
-              <Button
-                variant="outline"
-                size="lg"
-                className="font-title text-lg px-8 py-6 border-elixir text-elixir hover:bg-elixir group"
-              >
-                <Zap className="mr-2 w-5 h-5 group-hover:animate-pulse" />
-                Leaderboard
-              </Button>
+              <Link to="/leaderboard">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="font-outfit text-lg px-8 py-6 group bg-white"
+                >
+                  <span className="inline-flex items-center justify-center text-inherit">✨</span>
+                  Leaderboard
+                </Button>
+              </Link>
             </div>
           </div>
 
-          {/* RIGHT: 3D Golem*/}
-          <div className="relative">
-            <div className="absolute -inset-8 bg-accent/10 blur-3xl rounded-full pointer-events-none" />
-            <GolemCanvas />
+          {/* RIGHT: Hero Graphic */}
+          <div className="relative flex justify-center mt-10 lg:mt-0">
+             <div className="w-full max-w-sm aspect-square bg-white border-4 border-foreground rounded-[3rem] shadow-soft-hard overflow-hidden relative flex items-center justify-center group">
+               <div className="absolute inset-0 bg-[radial-gradient(hsl(var(--muted-foreground))_1.5px,transparent_1.5px)] [background-size:24px_24px] opacity-20" />
+               <img src="/assets/Hero.png" alt="KGP Royale Hero" className="relative z-10 w-4/5 h-4/5 object-contain transform scale-110 -rotate-3 group-hover:scale-100 group-hover:rotate-0 transition-transform duration-500" />
+             </div>
           </div>
         </div>
       </div>
-
-      {/* Bottom arena decoration */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-navy-dark to-transparent pointer-events-none" />
     </section>
   );
 };

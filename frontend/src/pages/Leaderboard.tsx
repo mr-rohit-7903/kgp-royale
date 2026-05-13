@@ -1,260 +1,185 @@
-// src/pages/LeaderboardPage.tsx
-import React, { useMemo, useState } from "react";
-import { Crown, Search, Medal, ChevronLeft, ChevronRight } from "lucide-react";
-import { Input } from "@/components/ui/input";
-
-type Player = {
-  id: number;
-  rank: number;
-  name: string;
-  clan: string;
-  trophies: number;
-  avatar: string;
-};
-
-const initialData: Player[] = [
-  { id: 1, rank: 1, name: "DragonSlayer", clan: "KGP Legends", trophies: 7823, avatar: "👑" },
-  { id: 2, rank: 2, name: "ElixirMaster", clan: "Arena Kings", trophies: 7654, avatar: "⚔️" },
-  { id: 3, rank: 3, name: "RoyalKnight", clan: "KGP Legends", trophies: 7521, avatar: "🛡️" },
-  { id: 4, rank: 4, name: "TowerCrusher", clan: "Battle Lords", trophies: 7398, avatar: "🏰" },
-  { id: 5, rank: 5, name: "SpellCaster", clan: "Arena Kings", trophies: 7245, avatar: "✨" },
-  { id: 6, rank: 6, name: "GolemMaster", clan: "KGP Legends", trophies: 7112, avatar: "🗿" },
-  { id: 7, rank: 7, name: "HogRider99", clan: "Battle Lords", trophies: 6987, avatar: "🐗" },
-  { id: 8, rank: 8, name: "PrinceFury", clan: "KGP Legends", trophies: 6854, avatar: "👸" },
-];
-
-/**
- * Optionally generate mock players to demonstrate pagination.
- * Remove or replace with real data.
- */
-function generateMockPlayers(startId: number, startRank: number, count: number): Player[] {
-  const names = ["FrostLord","SpearHero","ArcMage","MinerPro","ZapMaster","InfernoBeast","GhostRider","BoltAce","PaladinX","NightWarden","SkellyKing","BombSquad","Lancer","Warden","Blitz"];
-  const clans = ["KGP Legends","Arena Kings","Battle Lords","Storm Clan","Night Watch","Royal Order"];
-  const avatars = ["⚡","🛡️","🔥","💎","👑","🗡️","🪄","🧱","🐲","🌪️"];
-
-  const out: Player[] = [];
-  for (let i = 0; i < count; i++) {
-    const id = startId + i;
-    const rank = startRank + i;
-    const name = `${names[i % names.length]}${(i % 100)}`;
-    const clan = clans[i % clans.length];
-    const trophies = Math.max(2000, 7600 - rank * 10 - (i % 50) * 3); // some descending trophies
-    const avatar = avatars[i % avatars.length];
-    out.push({ id, rank, name, clan, trophies, avatar });
-  }
-  return out;
-}
-
-const PAGE_SIZE = 10;
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { getTopPlayers, UserProfile } from "@/lib/userService";
 
 const getRankStyle = (rank: number) => {
   switch (rank) {
     case 1:
-      return "bg-gradient-to-r from-accent/20 to-transparent border-accent";
+      return "bg-[hsl(var(--tertiary))] text-foreground border-b-2 border-foreground";
     case 2:
-      return "bg-gradient-to-r from-gray-400/20 to-transparent border-gray-400";
+      return "bg-[hsl(var(--secondary))] text-white border-b-2 border-foreground";
     case 3:
-      return "bg-gradient-to-r from-orange-600/20 to-transparent border-orange-600";
+      return "bg-[hsl(var(--quaternary))] text-white border-b-2 border-foreground";
     default:
-      return "";
+      return "border-b-2 border-slate-200 hover:bg-muted";
   }
 };
 
+const PAGE_SIZE = 15;
 
 const LeaderboardPage: React.FC = () => {
-  // combine initial + mock to have many entries for pagination/demo
-  const combinedData = useMemo(() => {
-    const generated = generateMockPlayers(9, 9, 52); // generates 52 players (9..60)
-    const full = [...initialData, ...generated];
-    // sort by rank just in case
-    full.sort((a, b) => a.rank - b.rank);
-    return full;
-  }, []);
-
-  const [query, setQuery] = useState("");
+  const [players, setPlayers] = useState<UserProfile[]>([]);
+  const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
 
-  // Filtered players according to search query (name or clan)
-  const filtered = useMemo(() => {
-    if (!query.trim()) return combinedData;
-    const q = query.trim().toLowerCase();
-    return combinedData.filter(
-      (p) => p.name.toLowerCase().includes(q) || p.clan.toLowerCase().includes(q)
-    );
-  }, [combinedData, query]);
+  useEffect(() => {
+    const fetchLeaderboard = async () => {
+      try {
+        // Fetch a larger set for the standalone page
+        const data = await getTopPlayers(100);
+        setPlayers(data);
+      } catch (error) {
+        console.error("Failed to fetch leaderboard:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchLeaderboard();
+  }, []);
 
-  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
-
-  // Clamp page if filtered shrinks
-  if (page > totalPages) setPage(totalPages);
-
+  const totalPages = Math.max(1, Math.ceil(players.length / PAGE_SIZE));
   const pageStartIndex = (page - 1) * PAGE_SIZE;
-  const pageData = filtered.slice(pageStartIndex, pageStartIndex + PAGE_SIZE);
+  const pageData = players.slice(pageStartIndex, pageStartIndex + PAGE_SIZE);
 
   const goTo = (p: number) => {
     const next = Math.max(1, Math.min(totalPages, p));
     setPage(next);
-    // scroll to top of list for better UX
-    const el = document.getElementById("leaderboard-top");
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
-    <main className="min-h-screen py-12 bg-background mt-10 ">
-      <div className="container mx-auto px-4">
+    <main className="min-h-screen py-20 bg-background relative overflow-hidden">
+      {/* Background effects */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[hsl(var(--tertiary))] rounded-full mix-blend-multiply filter blur-3xl opacity-20" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[hsl(var(--secondary))] rounded-full mix-blend-multiply filter blur-3xl opacity-20" />
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
-        <div id="leaderboard-top" className="text-center mb-8">
-          <h1 className="font-title text-4xl md:text-6xl cr-title mb-2">
-            <span className="text-foreground">Live</span>{" "}
-            <span className="text-primary">Leaderboard</span>
+        <div className="text-center mb-16">
+          <h1 className="font-outfit font-extrabold text-6xl md:text-8xl text-foreground mb-4 drop-shadow-[4px_4px_0px_white]">
+            Hall of <span className="text-primary">Legends</span>
           </h1>
-          <p className="text-sm text-muted-foreground">Top players, weekly standings & tournament trophies</p>
+          <p className="text-muted-foreground font-jakarta font-medium text-xl max-w-2xl mx-auto">
+            The elite warriors of IIT Kharagpur. Every trophy earned is a step towards immortality.
+          </p>
+          <div className="w-40 h-4 bg-primary mx-auto rounded-full border-2 border-foreground shadow-hard mt-8" />
         </div>
 
-        {/* Search + stats row */}
-        <div className="max-w-4xl mx-auto mb-6">
-          <div className="flex flex-col sm:flex-row items-center gap-4">
-            <div className="relative flex-1 w-full">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-              <Input
-                type="text"
-                placeholder="Search player or clan..."
-                value={query}
-                onChange={(e) => { setQuery(e.target.value); setPage(1); }}
-                className="pl-12 h-12 bg-secondary border-2 border-border font-body text-base"
-              />
-            </div>
-
-            <div className="flex items-center gap-6">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <img src="/assets/Trophy.png" alt="Trophy" className="w-4 h-4" />
-                <span><strong>{filtered.length}</strong> players</span>
-              </div>
-              <div className="text-sm text-muted-foreground">
-                Page <strong>{page}</strong> of <strong>{totalPages}</strong>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Leaderboard table */}
-        <div className="max-w-4xl mx-auto">
-          <div className="cr-card overflow-hidden">
-            {/* Header */}
-            <div className="bg-secondary px-6 py-3 border-b-2 border-border grid grid-cols-12 gap-4 font-title text-sm text-muted-foreground">
+        <div className="max-w-5xl mx-auto">
+          {/* Leaderboard Table */}
+          <div className="bg-card border-4 border-foreground rounded-[2rem] shadow-soft-hard overflow-hidden">
+            {/* Table Header */}
+            <div className="bg-white px-8 py-6 border-b-4 border-foreground grid grid-cols-12 gap-4 font-outfit font-bold text-sm text-muted-foreground uppercase tracking-wider">
               <div className="col-span-1">Rank</div>
-              <div className="col-span-5">Player</div>
-              <div className="col-span-4">Clan</div>
-              <div className="col-span-2 text-right"><img src="/assets/Trophy.png" alt="Trophy" className="w-4 h-4 inline" /></div>
+              <div className="col-span-4">Player</div>
+              <div className="col-span-2">Clan</div>
+              <div className="col-span-3">Hall</div>
+              <div className="col-span-2 text-right">
+                <span className="inline-flex items-center gap-1">
+                  <span>🏆</span> Trophies
+                </span>
+              </div>
             </div>
 
             {/* Rows */}
-            <div className="divide-y divide-border">
-              {pageData.length === 0 ? (
-                <div className="px-6 py-8 text-center text-muted-foreground">No players found.</div>
-              ) : (
-                pageData.map((player) => (
-                  <div
-                    key={player.id}
-                    className={`px-6 py-4 grid grid-cols-12 gap-4 items-center transition-colors hover:bg-secondary/50 ${getRankStyle(player.rank)}`}
-                  >
-                    <div className="col-span-1 flex items-center">
-                      <span className="font-title text-lg text-muted-foreground">#{player.rank}</span>
-                    </div>
-
-                    <div className="col-span-5 flex items-center gap-3">
-                      <div>
-                        <div className="font-semibold text-foreground">{player.name}</div>
-                      </div>
-                    </div>
-
-                    <div className="col-span-4">
-                      <span className="text-muted-foreground font-body text-sm">{player.clan}</span>
-                    </div>
-
-                    <div className="col-span-2 text-right">
-                      <span className="font-title text-accent">{player.trophies.toLocaleString()}</span>
+            <div className="divide-y divide-border bg-white">
+              {loading ? (
+                Array.from({ length: 8 }).map((_, i) => (
+                  <div key={i} className="px-8 py-8 animate-pulse flex gap-6 items-center">
+                    <div className="w-10 h-10 bg-slate-100 rounded-full border-2 border-slate-200" />
+                    <div className="flex-1 space-y-3">
+                      <div className="h-5 bg-slate-100 rounded w-1/4" />
+                      <div className="h-4 bg-slate-50 rounded w-1/6" />
                     </div>
                   </div>
                 ))
+              ) : pageData.length === 0 ? (
+                <div className="px-8 py-20 text-center">
+                  <div className="text-6xl mb-6">🏜️</div>
+                  <h3 className="font-outfit font-bold text-3xl mb-2">The Arena Awaits</h3>
+                  <p className="text-muted-foreground font-jakarta font-medium">No warriors have registered for this season yet.</p>
+                  <Link to="/register" className="mt-6 inline-block">
+                    <Button variant="gold" size="lg">Be the First</Button>
+                  </Link>
+                </div>
+              ) : (
+                pageData.map((player, index) => {
+                  const actualRank = pageStartIndex + index + 1;
+                  return (
+                    <div
+                      key={player.uid}
+                      className={`px-8 py-6 grid grid-cols-12 gap-4 items-center transition-all ${getRankStyle(actualRank)}`}
+                    >
+                      <div className="col-span-1 flex items-center">
+                        <span className="font-outfit font-black text-2xl opacity-50">#{actualRank}</span>
+                      </div>
+                      <Link 
+                        to={`/profile/${player.playerTag.replace("#", "")}`}
+                        className="col-span-4 flex items-center gap-4 group cursor-pointer hover:translate-x-2 transition-transform"
+                      >
+                        <div className="w-14 h-14 flex-shrink-0 bg-white rounded-full border-2 border-foreground shadow-hard overflow-hidden flex items-center justify-center bg-gradient-to-br from-white to-slate-100 group-hover:scale-110 transition-transform">
+                          {player.favouriteCardIcon ? (
+                            <img src={player.favouriteCardIcon} alt={player.favouriteCardName} className="w-full h-full object-cover" />
+                          ) : (
+                            <span className="text-2xl">🛡️</span>
+                          )}
+                        </div>
+                        <div className="flex flex-col truncate">
+                          <span className="font-bold font-jakarta text-xl truncate group-hover:text-primary transition-colors">{player.playerName}</span>
+                          <span className="text-xs font-bold text-primary uppercase tracking-tighter">{player.playerTag}</span>
+                        </div>
+                      </Link>
+                      <div className="col-span-2">
+                        <span className="font-jakarta font-bold text-sm truncate opacity-80">{player.clanName || "No Clan"}</span>
+                      </div>
+                      <div className="col-span-3">
+                        <span className="font-jakarta font-medium text-sm truncate opacity-80" title={player.hall}>
+                          {player.hall || "General"}
+                        </span>
+                      </div>
+                      <div className="col-span-2 text-right">
+                        <span className="font-outfit font-black text-2xl text-foreground">
+                          {player.trophies.toLocaleString()}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })
               )}
             </div>
           </div>
 
-          {/* Pagination controls */}
-          <div className="flex items-center justify-between mt-6">
-            <div className="flex items-center gap-2">
-              <button
-                className="cr-btn px-3 py-2 disabled:opacity-50"
-                onClick={() => goTo(1)}
-                disabled={page === 1}
-                aria-label="First page"
-              >
-                «
-              </button>
-              <button
-                className="cr-btn px-3 py-2 disabled:opacity-50"
+          {/* Pagination */}
+          {!loading && totalPages > 1 && (
+            <div className="flex items-center justify-center gap-4 mt-12">
+              <Button
+                variant="outline"
+                className="w-14 h-14 rounded-full border-4 border-foreground shadow-hard bg-white hover:bg-tertiary transition-all"
                 onClick={() => goTo(page - 1)}
                 disabled={page === 1}
-                aria-label="Previous page"
               >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-            </div>
+                ◀
+              </Button>
+              
+              <div className="flex items-center gap-2 bg-white border-4 border-foreground rounded-full px-6 py-2 shadow-hard font-outfit font-bold text-xl">
+                <span className="text-primary">{page}</span>
+                <span className="opacity-30">/</span>
+                <span>{totalPages}</span>
+              </div>
 
-            {/* Page numbers (show a small window around current page) */}
-            <div className="flex items-center gap-2">
-              {Array.from({ length: totalPages }).map((_, i) => {
-                const p = i + 1;
-                // show if near current page or boundaries
-                if (totalPages > 9) {
-                  if (p === 1 || p === totalPages || (p >= page - 2 && p <= page + 2)) {
-                    return (
-                      <button
-                        key={p}
-                        onClick={() => goTo(p)}
-                        className={`px-3 py-1 rounded ${p === page ? "bg-accent/20 border-accent text-accent" : "bg-transparent text-muted-foreground"}`}
-                      >
-                        {p}
-                      </button>
-                    );
-                  }
-                  // show ellipsis for skipped ranges
-                  if (p === 2 && page > 4) return <span key="start-ellipsis" className="px-2 text-muted-foreground">…</span>;
-                  if (p === totalPages - 1 && page < totalPages - 3) return <span key="end-ellipsis" className="px-2 text-muted-foreground">…</span>;
-                  return null;
-                }
-                return (
-                  <button
-                    key={p}
-                    onClick={() => goTo(p)}
-                    className={`px-3 py-1 rounded ${p === page ? "bg-accent/20 border-accent text-accent" : "bg-transparent text-muted-foreground"}`}
-                  >
-                    {p}
-                  </button>
-                );
-              })}
-            </div>
-
-            <div className="flex items-center gap-2">
-              <button
-                className="cr-btn px-3 py-2 disabled:opacity-50"
+              <Button
+                variant="outline"
+                className="w-14 h-14 rounded-full border-4 border-foreground shadow-hard bg-white hover:bg-tertiary transition-all"
                 onClick={() => goTo(page + 1)}
                 disabled={page === totalPages}
-                aria-label="Next page"
               >
-                <ChevronRight className="w-4 h-4" />
-              </button>
-              <button
-                className="cr-btn px-3 py-2 disabled:opacity-50"
-                onClick={() => goTo(totalPages)}
-                disabled={page === totalPages}
-                aria-label="Last page"
-              >
-                »
-              </button>
+                ▶
+              </Button>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </main>

@@ -1,7 +1,9 @@
-import { Crown, ChevronRight } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import MatchCard from "@/components/MatchCard";
+import { FaChevronRight, FaCrown } from "react-icons/fa";
+
 
 const Tournament = () => {
   const quarterFinals = [
@@ -44,7 +46,7 @@ const Tournament = () => {
             <div className="flex-1">
               <div className="text-center mb-4">
                 <div className="inline-flex items-center gap-2 bg-secondary/50 px-4 py-2 rounded-xl border-2 border-border">
-                  <Crown className="w-4 h-4 text-accent" />
+                  <span className="inline-flex items-center justify-center text-inherit">👑</span>
                   <h2 className="font-title text-lg text-foreground">Quarter Finals</h2>
                 </div>
               </div>
@@ -57,14 +59,14 @@ const Tournament = () => {
 
             {/* Connector */}
             <div className="hidden lg:flex items-center justify-center">
-              <ChevronRight className="w-8 h-8 text-accent animate-pulse" />
+              <span className="inline-flex items-center justify-center text-inherit">▶</span>
             </div>
 
             {/* Semi Finals */}
             <div className="flex-1">
               <div className="text-center mb-4">
                 <div className="inline-flex items-center gap-2 bg-secondary/50 px-4 py-2 rounded-xl border-2 border-border">
-                  <Crown className="w-4 h-4 text-accent" />
+                  <span className="inline-flex items-center justify-center text-inherit">👑</span>
                   <h2 className="font-title text-lg text-foreground">Semi Finals</h2>
                 </div>
               </div>
@@ -79,7 +81,7 @@ const Tournament = () => {
 
             {/* Connector */}
             <div className="hidden lg:flex items-center justify-center">
-              <ChevronRight className="w-8 h-8 text-accent animate-pulse" />
+              <span className="inline-flex items-center justify-center text-inherit">▶</span>
             </div>
 
             {/* Finals */}
@@ -108,7 +110,7 @@ const Tournament = () => {
             <Button variant="gold" size="lg" className="gap-3">
               <img src="/assets/Trophy.png" alt="Trophy" className="w-5 h-5 object-contain" />
               View Upcoming Tournaments
-              <ChevronRight className="w-5 h-5" />
+              <span className="inline-flex items-center justify-center text-inherit">▶</span>
             </Button>
           </Link>
         </div>

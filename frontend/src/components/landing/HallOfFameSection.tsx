@@ -1,11 +1,12 @@
-import { Crown, Star } from "lucide-react";
+import { FaCrown, FaStar } from "react-icons/fa";
+
 
 const champions = [
   {
     name: "DragonSlayer",
     title: "Season 8 Champion",
     avatar: "👑",
-    frame: "champion-frame-gold",
+    frame: "border-primary bg-primary text-white",
     trophies: 8234,
     wins: 156,
   },
@@ -13,7 +14,7 @@ const champions = [
     name: "ElixirMaster",
     title: "Season 8 Runner-up",
     avatar: "⚔️",
-    frame: "champion-frame-silver",
+    frame: "border-secondary bg-secondary text-white",
     trophies: 7823,
     wins: 142,
   },
@@ -21,7 +22,7 @@ const champions = [
     name: "RoyalKnight",
     title: "Season 8 Third",
     avatar: "🛡️",
-    frame: "champion-frame-bronze",
+    frame: "border-quaternary bg-quaternary text-white",
     trophies: 7654,
     wins: 138,
   },
@@ -29,37 +30,36 @@ const champions = [
 
 const HallOfFameSection = () => {
   return (
-    <section className="py-20 relative">
+    <section className="py-20 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-accent/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-tertiary rounded-full blur-3xl opacity-20" />
       </div>
 
-      <div className="container mx-auto px-4 relative">
+      <div className="container mx-auto px-4 relative z-10">
         {/* Section Title */}
         <div className="text-center mb-16">
-          <h2 className="font-title text-4xl md:text-6xl cr-title mb-4">
-            <span className="text-foreground">Hall of</span>{" "}
-            <span className="text-accent">Fame</span>
+          <h2 className="font-outfit font-extrabold text-5xl md:text-6xl text-foreground mb-4 drop-shadow-[2px_2px_0px_white]">
+            Hall of <span className="text-secondary">Fame</span>
           </h2>
-          <p className="text-muted-foreground font-body">Past Season Champions</p>
-          <div className="section-divider w-48 mx-auto mt-4" />
+          <p className="text-muted-foreground font-jakarta font-medium text-xl">Past Season Champions</p>
+          <div className="w-32 h-4 bg-secondary mx-auto rounded-full border-2 border-foreground shadow-hard mt-6" />
         </div>
 
         {/* Champions Grid */}
-        <div className="flex flex-col md:flex-row items-center justify-center gap-8 max-w-4xl mx-auto">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-8 max-w-5xl mx-auto">
           {/* Second Place */}
-          <div className="order-2 md:order-1 md:mt-12">
+          <div className="order-2 md:order-1 md:mt-16 w-full max-w-xs">
             <ChampionCard champion={champions[1]} position={2} />
           </div>
 
           {/* First Place */}
-          <div className="order-1 md:order-2">
+          <div className="order-1 md:order-2 w-full max-w-xs z-10 relative md:-mt-8">
             <ChampionCard champion={champions[0]} position={1} />
           </div>
 
           {/* Third Place */}
-          <div className="order-3 md:mt-12">
+          <div className="order-3 md:mt-24 w-full max-w-xs">
             <ChampionCard champion={champions[2]} position={3} />
           </div>
         </div>
@@ -77,37 +77,37 @@ const ChampionCard = ({ champion, position }: ChampionCardProps) => {
   const isFirst = position === 1;
 
   return (
-    <div className={`relative ${isFirst ? 'scale-110' : ''}`}>
-      {/* Crown for first place */}
+    <div className={`relative ${isFirst ? 'scale-110' : ''} group`}>
+      {/* ({className}: {className?: string}) => <FaCrown className={(className || "") + " "} /> for first place */}
       {isFirst && (
-        <div className="absolute -top-8 left-1/2 -translate-x-1/2 z-10">
-          <Crown className="w-12 h-12 text-accent animate-float drop-shadow-[0_0_15px_hsl(var(--gold)/0.5)]" />
+        <div className="absolute -top-12 left-1/2 -translate-x-1/2 z-20 animate-bounce-subtle">
+          <span className="inline-flex items-center justify-center text-inherit">👑</span>
         </div>
       )}
 
-      <div className={`troop-card p-6 w-64 ${champion.frame}`}>
+      <div className={`bg-card p-8 rounded-2xl border-4 border-foreground shadow-hard transition-transform hover:-translate-y-2 hover:-rotate-2 hover:shadow-hard-hover text-center relative overflow-hidden`}>
         {/* Avatar */}
-        <div className="flex justify-center mb-4">
-          <div className={`w-24 h-24 rounded-full bg-gradient-to-br from-secondary to-navy flex items-center justify-center text-5xl ${champion.frame}`}>
+        <div className="flex justify-center mb-6 relative z-10">
+          <div className={`w-28 h-28 rounded-full border-4 border-foreground shadow-hard flex items-center justify-center text-5xl ${champion.frame} group-hover:scale-110 transition-transform`}>
             {champion.avatar}
           </div>
         </div>
 
         {/* Name & Title */}
-        <div className="text-center mb-4">
-          <h3 className="font-title text-xl text-foreground mb-1">{champion.name}</h3>
-          <p className="text-sm text-muted-foreground font-body">{champion.title}</p>
+        <div className="mb-6 relative z-10">
+          <h3 className="font-outfit font-extrabold text-2xl text-foreground mb-2">{champion.name}</h3>
+          <p className="text-sm font-jakarta font-bold text-muted-foreground uppercase tracking-wider bg-muted py-1 px-3 rounded-full border-2 border-slate-200 inline-block">{champion.title}</p>
         </div>
 
         {/* Stats */}
-        <div className="flex justify-center gap-4 text-sm">
+        <div className="flex justify-center gap-4 text-base relative z-10 font-outfit font-bold bg-muted py-2 px-4 rounded-xl border-2 border-slate-200">
           <div className="flex items-center gap-1">
-            <img src="/assets/Trophy.png" alt="Trophy" className="w-4 h-4 object-contain" />
-            <span className="text-foreground font-semibold">{champion.trophies}</span>
+            <span>🏆</span>
+            <span className="text-foreground">{champion.trophies}</span>
           </div>
           <div className="flex items-center gap-1">
-            <Star className="w-4 h-4 text-primary" />
-            <span className="text-foreground font-semibold">{champion.wins} wins</span>
+            <span className="inline-flex items-center justify-center text-inherit">⭐</span>
+            <span className="text-foreground">{champion.wins}</span>
           </div>
         </div>
       </div>

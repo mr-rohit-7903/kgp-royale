@@ -16,6 +16,8 @@ export default {
       fontFamily: {
         title: ["ClashRegular", "Bangers", "Comic Sans MS", "cursive", "sans-serif"],
         body: ["Montserrat", "Poppins", "sans-serif"],
+        outfit: ["Outfit", "system-ui", "sans-serif"],
+        jakarta: ["Plus Jakarta Sans", "system-ui", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -95,6 +97,10 @@ export default {
         blue: "var(--shadow-blue)",
         "glow-gold": "var(--shadow-glow-gold)",
         "glow-blue": "var(--shadow-glow-blue)",
+        hard: "var(--shadow-hard)",
+        "hard-hover": "var(--shadow-hard-hover)",
+        "hard-active": "var(--shadow-hard-active)",
+        "soft-hard": "var(--shadow-soft-hard)",
       },
       keyframes: {
         "accordion-down": {

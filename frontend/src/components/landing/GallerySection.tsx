@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { X, ChevronLeft, ChevronRight } from "lucide-react";
+import { FaChevronLeft, FaChevronRight, FaTimes } from "react-icons/fa";
+
+
 
 const galleryImages = [
   {
@@ -58,35 +60,34 @@ const GallerySection = () => {
 
   return (
     <section className="py-20 relative">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 relative z-10">
         {/* Section Title */}
         <div className="text-center mb-12">
-          <h2 className="font-title text-4xl md:text-6xl cr-title mb-4">
-            <span className="text-foreground">Arena</span>{" "}
-            <span className="text-primary">Gallery</span>
+          <h2 className="font-outfit font-extrabold text-5xl md:text-6xl text-foreground mb-4 drop-shadow-[2px_2px_0px_white]">
+            Arena <span className="text-quaternary">Gallery</span>
           </h2>
-          <div className="section-divider w-48 mx-auto" />
+          <div className="w-32 h-4 bg-quaternary mx-auto rounded-full border-2 border-foreground shadow-hard mt-4" />
         </div>
 
         {/* Gallery Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-5xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {galleryImages.map((image) => (
             <button
               key={image.id}
               onClick={() => openLightbox(image.id)}
-              className="cr-card aspect-square overflow-hidden group relative"
+              className="bg-card border-4 border-foreground rounded-[2rem] shadow-hard aspect-square overflow-hidden group relative transform hover:-rotate-2 hover:-translate-y-2 hover:shadow-hard-hover transition-all"
             >
               {/* Placeholder with emoji */}
-              <div className="absolute inset-0 bg-gradient-to-br from-secondary to-navy flex items-center justify-center">
-                <span className="text-6xl md:text-8xl opacity-50 group-hover:opacity-100 group-hover:scale-110 transition-all">
+              <div className="absolute inset-0 bg-muted flex items-center justify-center border-b-4 border-foreground group-hover:bg-quaternary transition-colors">
+                <span className="text-6xl md:text-8xl transform group-hover:scale-125 transition-transform duration-300 drop-shadow-md">
                   {image.emoji}
                 </span>
               </div>
 
               {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-navy via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4">
-                <p className="font-title text-foreground text-lg">{image.title}</p>
-                <p className="text-muted-foreground text-sm font-body">{image.category}</p>
+              <div className="absolute inset-0 bg-white/90 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-center items-center p-4">
+                <p className="font-outfit font-extrabold text-foreground text-2xl text-center mb-2">{image.title}</p>
+                <p className="text-white bg-foreground font-jakarta font-bold text-sm px-3 py-1 rounded-full uppercase tracking-widest border-2 border-transparent">{image.category}</p>
               </div>
             </button>
           ))}
@@ -95,37 +96,37 @@ const GallerySection = () => {
 
       {/* Lightbox */}
       {selectedImage !== null && (
-        <div className="fixed inset-0 z-50 bg-navy-dark/95 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-background/95 backdrop-blur-sm flex items-center justify-center p-4">
           <button
             onClick={closeLightbox}
-            className="absolute top-4 right-4 w-12 h-12 rounded-full bg-secondary flex items-center justify-center hover:bg-muted transition-colors"
+            className="absolute top-4 right-4 w-12 h-12 rounded-full bg-white border-2 border-foreground shadow-hard flex items-center justify-center hover:bg-destructive hover:text-white transition-colors"
           >
-            <X className="w-6 h-6 text-foreground" />
+            <span className="inline-flex items-center justify-center text-inherit">❌</span>
           </button>
 
           <button
             onClick={() => navigate("prev")}
-            className="absolute left-4 w-12 h-12 rounded-full bg-secondary flex items-center justify-center hover:bg-muted transition-colors"
+            className="absolute left-4 md:left-10 w-14 h-14 rounded-full bg-white border-2 border-foreground shadow-hard flex items-center justify-center hover:bg-tertiary hover:-translate-y-1 hover:shadow-hard-hover transition-all"
           >
-            <ChevronLeft className="w-6 h-6 text-foreground" />
+            <span className="inline-flex items-center justify-center text-inherit">◀</span>
           </button>
 
           <button
             onClick={() => navigate("next")}
-            className="absolute right-4 w-12 h-12 rounded-full bg-secondary flex items-center justify-center hover:bg-muted transition-colors"
+            className="absolute right-4 md:right-10 w-14 h-14 rounded-full bg-white border-2 border-foreground shadow-hard flex items-center justify-center hover:bg-tertiary hover:-translate-y-1 hover:shadow-hard-hover transition-all"
           >
-            <ChevronRight className="w-6 h-6 text-foreground" />
+            <span className="inline-flex items-center justify-center text-inherit">▶</span>
           </button>
 
           <div className="max-w-4xl w-full">
             {galleryImages
               .filter((img) => img.id === selectedImage)
               .map((image) => (
-                <div key={image.id} className="cr-card aspect-video flex items-center justify-center">
+                <div key={image.id} className="bg-white border-4 border-foreground rounded-[3rem] shadow-hard aspect-video flex items-center justify-center p-10 transform scale-95 animate-in zoom-in-95 duration-200">
                   <div className="text-center">
-                    <span className="text-9xl block mb-4">{image.emoji}</span>
-                    <h3 className="font-title text-2xl text-foreground">{image.title}</h3>
-                    <p className="text-muted-foreground font-body">{image.category}</p>
+                    <span className="text-[12rem] block mb-8 drop-shadow-xl hover:scale-110 transition-transform duration-500 cursor-default">{image.emoji}</span>
+                    <h3 className="font-outfit font-extrabold text-4xl text-foreground mb-4">{image.title}</h3>
+                    <p className="text-foreground font-jakarta font-bold text-lg bg-muted px-6 py-2 rounded-full inline-block border-2 border-slate-200">{image.category}</p>
                   </div>
                 </div>
               ))}

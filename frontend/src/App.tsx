@@ -15,7 +15,7 @@ import NotFound from "./pages/NotFound";
 import Profile from "./pages/user/Profile";
 import LogIn from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
-
+import PublicProfile from "./pages/PublicProfile";
 
 const queryClient = new QueryClient();
 
@@ -26,9 +26,9 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <AuthProvider>
-          <div className="flex flex-col min-h-screen">
+          <div className="flex flex-col min-h-screen relative overflow-hidden">
             <Navbar />
-            <main className="flex-1">
+            <main className="flex-1 relative z-10 pt-20">
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/tournament" element={<Tournament />} />
@@ -36,6 +36,7 @@ const App = () => (
                 <Route path="/upcoming" element={<Upcoming />} />
                 <Route path="/leaderboard" element={<LeaderboardPage />} />
                 <Route path="/user/profile" element={<Profile />} />
+                <Route path="/profile/:playerTag" element={<PublicProfile />} />
                 <Route path="/login" element={<LogIn/>} />
                 <Route path="/register" element={<Register/>} />
                 <Route path="*" element={<NotFound />} />

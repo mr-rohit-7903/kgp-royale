@@ -1,4 +1,5 @@
-import { Crown, Shield } from "lucide-react";
+import { FaCrown, FaShieldAlt } from "react-icons/fa";
+
 
 interface MatchCardProps {
   player1: string;
@@ -23,11 +24,11 @@ const MatchCard = ({ player1, player2, time, winner, isLive }: MatchCardProps) =
       <div className="flex items-center justify-between gap-4">
         {/* Player 1 */}
         <div className={`flex-1 text-center p-3 rounded-xl ${winner === 1 ? "bg-accent/20 border-2 border-accent" : "bg-secondary/30"}`}>
-          <Shield className={`w-6 h-6 mx-auto mb-2 ${winner === 1 ? "text-accent" : "text-primary"}`} />
+          <span className="inline-flex items-center justify-center text-inherit">🛡️</span>
           <p className={`font-title text-sm truncate ${winner === 1 ? "text-accent" : "text-foreground"}`}>
             {player1}
           </p>
-          {winner === 1 && <Crown className="w-4 h-4 mx-auto mt-1 text-accent animate-float" />}
+          {winner === 1 && <span className="inline-flex items-center justify-center text-inherit">👑</span>}
         </div>
 
         {/* VS */}
@@ -40,11 +41,11 @@ const MatchCard = ({ player1, player2, time, winner, isLive }: MatchCardProps) =
 
         {/* Player 2 */}
         <div className={`flex-1 text-center p-3 rounded-xl ${winner === 2 ? "bg-accent/20 border-2 border-accent" : "bg-secondary/30"}`}>
-          <Shield className={`w-6 h-6 mx-auto mb-2 ${winner === 2 ? "text-accent" : "text-primary"}`} />
+          <span className="inline-flex items-center justify-center text-inherit">🛡️</span>
           <p className={`font-title text-sm truncate ${winner === 2 ? "text-accent" : "text-foreground"}`}>
             {player2}
           </p>
-          {winner === 2 && <Crown className="w-4 h-4 mx-auto mt-1 text-accent animate-float" />}
+          {winner === 2 && <span className="inline-flex items-center justify-center text-inherit">👑</span>}
         </div>
       </div>
 

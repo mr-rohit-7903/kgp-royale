@@ -1,9 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Import Supercell-style fonts */
-/* @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap'); */
 
 /* Custom Clash Royale Style Font */
 @font-face {
@@ -15,77 +14,55 @@
 
 @layer base {
   :root {
-    /* Clash Royale Theme Colors */
-    --background: 222 47% 8%;
-    --foreground: 0 0% 100%;
-
-    --card: 222 47% 12%;
-    --card-foreground: 0 0% 100%;
-
-    --popover: 222 47% 12%;
-    --popover-foreground: 0 0% 100%;
-
-    /* Royal Blue Primary */
-    --primary: 210 100% 50%;
+    /* Playful Geometric Design Tokens */
+    --background: 54 100% 98%; /* #FFFDF5 */
+    --foreground: 215 28% 17%; /* #1E293B */
+    
+    --card: 0 0% 100%; /* #FFFFFF */
+    --card-foreground: 215 28% 17%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 28% 17%;
+    
+    --primary: 258 90% 66%; /* Vivid Violet #8B5CF6 */
     --primary-foreground: 0 0% 100%;
-
-    /* Dark Navy Secondary */
-    --secondary: 222 47% 18%;
-    --secondary-foreground: 0 0% 100%;
-
-    /* Gold Accent */
-    --accent: 45 100% 50%;
-    --accent-foreground: 222 47% 8%;
-
-    --muted: 222 30% 20%;
-    --muted-foreground: 222 20% 70%;
-
+    
+    --secondary: 329 86% 70%; /* Hot Pink #F472B6 */
+    --secondary-foreground: 215 28% 17%;
+    
+    --muted: 210 40% 96%; /* #F1F5F9 */
+    --muted-foreground: 215 16% 47%; /* #64748B */
+    
+    --accent: 258 90% 66%; /* Vivid Violet */
+    --accent-foreground: 0 0% 100%;
+    
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
-
-    --border: 222 30% 25%;
-    --input: 222 30% 20%;
-    --ring: 45 100% 50%;
-
+    
+    --border: 214 32% 91%; /* #E2E8F0 */
+    --input: 0 0% 100%; /* #FFFFFF */
+    --ring: 258 90% 66%; /* Violet Focus */
+    
+    /* Extra Geometric Palette */
+    --tertiary: 43 96% 56%; /* Amber/Yellow #FBBF24 */
+    --quaternary: 158 64% 52%; /* Emerald/Mint #34D399 */
+    
     --radius: 1rem;
-
-    /* Custom CR Theme Variables */
-    --gold: 45 100% 50%;
-    --gold-dark: 45 100% 35%;
-    --royal-blue: 210 100% 50%;
-    --royal-blue-dark: 210 100% 35%;
-    --navy: 222 47% 12%;
-    --navy-dark: 222 47% 6%;
-    --elixir: 270 100% 58%;
-    --elixir-dark: 270 100% 40%;
-    --neon-blue: 199 100% 60%;
-    --neon-pink: 330 100% 60%;
-
-    /* Gradients */
-    --gradient-arena: linear-gradient(180deg, hsl(222 47% 12%) 0%, hsl(222 47% 4%) 100%);
-    --gradient-gold: linear-gradient(135deg, hsl(45 100% 55%) 0%, hsl(45 100% 35%) 100%);
-    --gradient-royal: linear-gradient(135deg, hsl(210 100% 55%) 0%, hsl(210 100% 35%) 100%);
-    --gradient-elixir: linear-gradient(135deg, hsl(270 100% 60%) 0%, hsl(270 100% 40%) 100%);
-    --gradient-card: linear-gradient(145deg, hsl(222 47% 16%) 0%, hsl(222 47% 10%) 100%);
-    --gradient-wood: linear-gradient(180deg, hsl(30 50% 25%) 0%, hsl(30 50% 15%) 100%);
-
-    /* Shadows */
-    --shadow-chunky: 0 6px 0 hsl(222 47% 4%);
-    --shadow-gold: 0 6px 0 hsl(45 100% 25%);
-    --shadow-blue: 0 6px 0 hsl(210 100% 25%);
-    --shadow-elixir: 0 6px 0 hsl(270 100% 30%);
-    --shadow-glow-gold: 0 0 30px hsl(45 100% 50% / 0.5);
-    --shadow-glow-blue: 0 0 30px hsl(210 100% 50% / 0.5);
-    --shadow-glow-elixir: 0 0 30px hsl(270 100% 58% / 0.5);
-
-    --sidebar-background: 222 47% 10%;
-    --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 210 100% 50%;
+    
+    /* Playful Hard Shadows */
+    --shadow-hard: 4px 4px 0px 0px hsl(215 28% 17%);
+    --shadow-hard-hover: 6px 6px 0px 0px hsl(215 28% 17%);
+    --shadow-hard-active: 2px 2px 0px 0px hsl(215 28% 17%);
+    --shadow-soft-hard: 8px 8px 0px 0px hsl(214 32% 91%);
+    
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 215 28% 17%;
+    --sidebar-primary: 258 90% 66%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 222 47% 18%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 222 30% 25%;
-    --sidebar-ring: 45 100% 50%;
+    --sidebar-accent: 210 40% 96%;
+    --sidebar-accent-foreground: 215 28% 17%;
+    --sidebar-border: 214 32% 91%;
+    --sidebar-ring: 258 90% 66%;
   }
 }
 
@@ -95,31 +72,38 @@
   }
 
   body {
-    @apply bg-background text-foreground;
-    font-family: 'Montserrat', 'Poppins', sans-serif;
-    background: var(--gradient-arena);
+    @apply bg-background text-foreground font-jakarta;
+    background-image: radial-gradient(hsl(var(--muted-foreground)) 1.5px, transparent 1.5px);
+    background-size: 32px 32px;
     min-height: 100vh;
   }
 
-  h1, h2, h3, h4, h5, h6, .font-title {
-    font-family: 'ClashRegular', 'Bangers', 'Comic Sans MS', cursive, sans-serif;
-    letter-spacing: 0.09em;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .font-title {
+    @apply font-outfit font-bold;
+    letter-spacing: normal;
   }
 }
 
 @layer components {
   .cr-title {
     font-family: 'ClashRegular', 'Bangers', 'Comic Sans MS', cursive, sans-serif;
-    text-shadow: 
+    text-shadow:
       4px 4px 0 hsl(var(--navy-dark)),
       -1px -1px 0 hsl(var(--navy-dark)),
       1px -1px 0 hsl(var(--navy-dark)),
       -1px 1px 0 hsl(var(--navy-dark));
     letter-spacing: 0.05em;
   }
+
   .cr-title-bottom {
     font-family: 'ClashRegular', 'Bangers', 'Comic Sans MS', cursive, sans-serif;
-    text-shadow: 
+    text-shadow:
       4px 4px 0 hsl(var(--navy-dark)),
       -1px -1px 0 hsl(var(--navy-dark)),
       1px -1px 0 hsl(var(--navy-dark)),
@@ -158,7 +142,7 @@
     background: var(--gradient-wood);
     border: 4px solid hsl(30 50% 30%);
     border-radius: var(--radius);
-    box-shadow: 
+    box-shadow:
       inset 0 2px 4px hsl(30 50% 35%),
       0 4px 0 hsl(30 50% 10%);
   }
@@ -166,7 +150,7 @@
   .elixir-bar {
     background: linear-gradient(90deg, hsl(var(--elixir)) 0%, hsl(var(--elixir-dark)) 100%);
     border-radius: 9999px;
-    box-shadow: 
+    box-shadow:
       inset 0 2px 4px hsl(270 100% 70% / 0.5),
       0 0 20px hsl(var(--elixir) / 0.5);
     animation: elixirPulse 2s ease-in-out infinite;
@@ -197,7 +181,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: 
+    background:
       radial-gradient(ellipse at 50% 0%, hsl(210 100% 50% / 0.2) 0%, transparent 50%),
       radial-gradient(ellipse at 20% 80%, hsl(270 100% 58% / 0.15) 0%, transparent 40%),
       radial-gradient(ellipse at 80% 80%, hsl(45 100% 50% / 0.1) 0%, transparent 40%);
@@ -205,13 +189,13 @@
   }
 
   .neon-vs {
-    text-shadow: 
+    text-shadow:
       0 0 10px hsl(var(--neon-pink)),
       0 0 20px hsl(var(--neon-pink)),
       0 0 40px hsl(var(--neon-pink));
     color: hsl(var(--neon-pink));
   }
-  
+
   .shadow-glow-elixir {
     box-shadow: 0 0 20px rgba(146, 39, 255, 0.35), 0 0 40px rgba(146, 39, 255, 0.25);
   }
@@ -241,21 +225,21 @@
 
   .champion-frame-gold {
     border: 4px solid hsl(var(--gold));
-    box-shadow: 
+    box-shadow:
       0 0 20px hsl(var(--gold) / 0.5),
       inset 0 0 20px hsl(var(--gold) / 0.2);
   }
 
   .champion-frame-silver {
     border: 4px solid hsl(0 0% 75%);
-    box-shadow: 
+    box-shadow:
       0 0 20px hsl(0 0% 75% / 0.5),
       inset 0 0 20px hsl(0 0% 75% / 0.2);
   }
 
   .champion-frame-bronze {
     border: 4px solid hsl(30 70% 45%);
-    box-shadow: 
+    box-shadow:
       0 0 20px hsl(30 70% 45% / 0.5),
       inset 0 0 20px hsl(30 70% 45% / 0.2);
   }
@@ -307,36 +291,85 @@
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 @keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 20px hsl(45 100% 50% / 0.4); }
-  50% { box-shadow: 0 0 40px hsl(45 100% 50% / 0.7); }
+
+  0%,
+  100% {
+    box-shadow: 0 0 20px hsl(45 100% 50% / 0.4);
+  }
+
+  50% {
+    box-shadow: 0 0 40px hsl(45 100% 50% / 0.7);
+  }
 }
 
 @keyframes bounceSubtle {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.03); }
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.03);
+  }
 }
 
 @keyframes elixirPulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.8; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
 }
 
 @keyframes march {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100vw); }
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100vw);
+  }
 }
 
 @keyframes elixirFlow {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 @keyframes sparkle {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(1.2); }
+
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.5;
+    transform: scale(1.2);
+  }
 }

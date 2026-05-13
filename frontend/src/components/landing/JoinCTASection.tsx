@@ -1,11 +1,13 @@
-import { Crown, MessageCircle, Users, Copy, Check, Instagram } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { FaCheck, FaCopy, FaCrown, FaInstagram, FaUsers } from "react-icons/fa";
 
 
 const JoinCTASection = () => {
   const [copied, setCopied] = useState(false);
-  const clanCode = "#KGP2024R";
+  const clanCode = "#G82PGL2P";
+  const inviteLink = "https://link.clashroyale.com/invite/clan/en?tag=G82PGL2P&token=kp7xjnnn&platform=android";
 
   const handleCopy = () => {
     navigator.clipboard.writeText(clanCode);
@@ -13,85 +15,75 @@ const JoinCTASection = () => {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const handleJoin = () => {
+    window.open(inviteLink, "_blank");
+  };
+
   return (
-    <section className="py-20 relative overflow-hidden">
+    <section id="join" className="py-20 relative overflow-hidden">
       {/* Background effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-elixir/10 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 left-1/4 w-64 h-64 bg-[hsl(var(--tertiary))] rounded-full mix-blend-multiply filter blur-3xl opacity-50" />
+        <div className="absolute top-1/2 right-1/4 w-80 h-80 bg-[hsl(var(--secondary))] rounded-full mix-blend-multiply filter blur-3xl opacity-50" />
       </div>
 
-      <div className="container mx-auto px-4 relative">
-        {/* Section Title */}
-        <div className="text-center mb-12">
-          <h2 className="font-title text-4xl md:text-6xl cr-title mb-4">
-            <span className="text-foreground">Join</span>{" "}
-            <span className="text-elixir">Us</span>
+      <div className="container mx-auto px-4 relative z-10">
+        <div className="text-center mb-16">
+          <h2 className="font-outfit font-extrabold text-5xl md:text-6xl text-foreground mb-4 drop-shadow-[2px_2px_0px_white]">
+            Join <span className="text-primary">Us</span>
           </h2>
-          <p className="text-muted-foreground font-body text-lg">
+          <p className="text-muted-foreground font-jakarta font-medium text-lg">
             Ready to enter the arena? Join our clan today!
           </p>
-          <div className="section-divider w-48 mx-auto mt-4" />
+          <div className="w-32 h-4 bg-tertiary mx-auto rounded-full border-2 border-foreground shadow-hard mt-6" />
         </div>
 
         <div className="max-w-2xl mx-auto">
           {/* Clan Code Card */}
-          <div className="cr-card-elixir p-8 mb-8">
-            <div className="text-center">
-              <Crown className="w-12 h-12 text-accent mx-auto mb-4 animate-float" />
-              <h3 className="font-title text-2xl text-foreground mb-2">Clan Code</h3>
-              <div className="flex items-center justify-center gap-3 mb-4">
-                <span className="font-title text-4xl text-elixir tracking-wider">{clanCode}</span>
-                <button
-                  onClick={handleCopy}
-                  className="p-2 rounded-lg bg-secondary hover:bg-muted transition-colors"
-                >
-                  {copied ? (
-                    <Check className="w-5 h-5 text-green-500" />
-                  ) : (
-                    <Copy className="w-5 h-5 text-muted-foreground" />
-                  )}
-                </button>
+          <div className="bg-card border-4 border-foreground rounded-[2rem] shadow-soft-hard p-10 mb-10 transform rotate-1 hover:rotate-0 transition-transform">
+            <div className="text-center relative">
+              <h3 className="font-outfit font-bold text-3xl text-foreground mb-4 mt-6">Clan Code</h3>
+              <div className="flex items-center justify-center gap-4 mb-6">
+                <span className="font-outfit font-extrabold text-5xl text-primary tracking-wider drop-shadow-[2px_2px_0px_rgba(0,0,0,0.1)]">{clanCode}</span>
               </div>
-              <p className="text-muted-foreground font-body text-sm">
-                Use this code to find us in-game!
-              </p>
+              <div className="mt-8 flex flex-col gap-4">
+                <Button
+                  variant="gold"
+                  size="lg"
+                  className="font-outfit text-2xl px-12 py-8 shadow-hard hover:shadow-hard-hover active:shadow-hard-active w-full sm:w-auto mx-auto"
+                  onClick={handleJoin}
+                >
+                  JOIN CLAN NOW
+                </Button>
+                <p className="text-muted-foreground font-jakarta font-medium text-sm">
+                  Clicking "Join" will open Clash Royale on your device
+                </p>
+              </div>
             </div>
           </div>
 
           {/* Social Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            {/* <Button
-              variant="royal"
-              size="lg"
-              className="font-title text-lg px-8 py-6"
-              onClick={() => window.open("https://discord.gg/example", "_blank")}
-            >
-              <MessageCircle className="mr-2 w-5 h-5" />
-              Join Discord
-            </Button> */}
-
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Button
-              variant="outline"
+              variant="default"
               size="lg"
-              className="font-title text-lg px-8 py-6 border-green-500 text-green-500 hover:bg-green-500/10"
+              className="font-outfit text-xl px-10 py-6"
               onClick={() => window.open("https://wa.me/example", "_blank")}
             >
-              <Users className="mr-2 w-5 h-5" />
+              <span className="inline-flex items-center justify-center text-inherit">👥</span>
               WhatsApp
             </Button>
 
             <Button
               variant="outline"
               size="lg"
-              className="font-title text-lg px-8 py-6 border-pink-500 text-pink-500 hover:bg-pink-500/10"
+              className="font-outfit text-xl px-10 py-6 bg-white"
               onClick={() => window.open("https://instagram.com/example", "_blank")}
             >
-              <Instagram className="mr-2 w-5 h-5" />
+              <span className="inline-flex items-center justify-center text-inherit">📸</span>
               Instagram
             </Button>
           </div>
-
         </div>
       </div>
     </section>
