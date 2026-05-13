@@ -52,12 +52,12 @@ const LeaderboardSection = () => {
           {/* Leaderboard */}
           <div className="bg-card border-4 border-foreground rounded-[2rem] shadow-soft-hard overflow-hidden">
             {/* Header */}
-            <div className="bg-white px-6 py-4 border-b-4 border-foreground grid grid-cols-12 gap-4 font-outfit font-bold text-sm text-muted-foreground uppercase tracking-wider">
-              <div className="col-span-1">Rank</div>
-              <div className="col-span-4">Player</div>
-              <div className="col-span-2">Clan</div>
-              <div className="col-span-3">Hall</div>
-              <div className="col-span-2 text-right">
+            <div className="bg-white px-4 md:px-6 py-4 border-b-4 border-foreground grid grid-cols-12 gap-2 md:gap-4 font-outfit font-bold text-xs md:text-sm text-muted-foreground uppercase tracking-wider">
+              <div className="col-span-2 md:col-span-1">Rank</div>
+              <div className="col-span-7 md:col-span-4">Player</div>
+              <div className="hidden md:block md:col-span-2">Clan</div>
+              <div className="hidden md:block md:col-span-3">Hall</div>
+              <div className="col-span-3 md:col-span-2 text-right">
                 <span>🏆</span>
               </div>
             </div>
@@ -83,32 +83,32 @@ const LeaderboardSection = () => {
                 players.map((player, index) => (
                   <div
                     key={player.uid}
-                    className={`px-6 py-4 grid grid-cols-12 gap-4 items-center transition-colors ${getRankStyle(index + 1)}`}
+                    className={`px-4 md:px-6 py-4 grid grid-cols-12 gap-2 md:gap-4 items-center transition-colors ${getRankStyle(index + 1)}`}
                   >
-                    <div className="col-span-1 flex items-center">
-                      <span className="font-outfit font-black text-xl opacity-50">#{index + 1}</span>
+                    <div className="col-span-2 md:col-span-1 flex items-center">
+                      <span className="font-outfit font-black text-lg md:text-xl opacity-50">#{index + 1}</span>
                     </div>
                     <Link 
                       to={`/profile/${player.playerTag.replace("#", "")}`}
-                      className="col-span-4 flex items-center gap-3 group cursor-pointer hover:translate-x-1 transition-transform"
+                      className="col-span-7 md:col-span-4 flex items-center gap-2 md:gap-3 group cursor-pointer hover:translate-x-1 transition-transform"
                     >
-                      <div className="w-12 h-12 flex-shrink-0 bg-white rounded-full border-2 border-foreground shadow-sm overflow-hidden flex items-center justify-center bg-gradient-to-br from-white to-slate-50 group-hover:scale-105 transition-transform">
+                      <div className="w-10 h-10 md:w-12 md:h-12 flex-shrink-0 bg-white rounded-full border-2 border-foreground shadow-sm overflow-hidden flex items-center justify-center bg-gradient-to-br from-white to-slate-50 group-hover:scale-105 transition-transform">
                         {player.favouriteCardIcon ? (
                           <img src={player.favouriteCardIcon} alt={player.favouriteCardName} className="w-full h-full object-cover" />
                         ) : (
-                          <span className="text-xl">🛡️</span>
+                          <span className="text-lg md:text-xl">🛡️</span>
                         )}
                       </div>
-                      <span className="font-bold font-jakarta text-lg truncate group-hover:text-primary transition-colors">{player.playerName}</span>
+                      <span className="font-bold font-jakarta text-sm md:text-lg truncate group-hover:text-primary transition-colors">{player.playerName}</span>
                     </Link>
-                    <div className="col-span-2">
+                    <div className="hidden md:block md:col-span-2">
                       <span className="font-jakarta font-medium text-sm truncate opacity-80">{player.clanName || "No Clan"}</span>
                     </div>
-                    <div className="col-span-3">
+                    <div className="hidden md:block md:col-span-3">
                       <span className="font-jakarta font-medium text-sm truncate opacity-80" title={player.hall}>{player.hall || "General"}</span>
                     </div>
-                    <div className="col-span-2 text-right">
-                      <span className="font-outfit font-extrabold text-xl">{player.trophies.toLocaleString()}</span>
+                    <div className="col-span-3 md:col-span-2 text-right">
+                      <span className="font-outfit font-extrabold text-lg md:text-xl">{player.trophies.toLocaleString()}</span>
                     </div>
                   </div>
                 ))

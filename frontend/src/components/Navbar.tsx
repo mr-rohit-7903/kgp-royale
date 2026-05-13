@@ -27,8 +27,11 @@ const Navbar = () => {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 group">
-            <span className="hidden sm:block font-outfit font-extrabold text-2xl md:text-3xl tracking-tight text-foreground">
+          <Link to="/" className="flex items-center gap-2 md:gap-3 group">
+            <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[hsl(var(--tertiary))] flex items-center justify-center border-[3px] md:border-4 border-foreground shadow-hard transform -rotate-6 group-hover:rotate-6 transition-transform">
+              <span className="font-outfit text-foreground text-sm md:text-lg font-black">KR</span>
+            </div>
+            <span className="font-outfit font-extrabold text-xl md:text-3xl tracking-tight text-foreground">
               KGP <span className="text-primary">ROYALE</span>
             </span>
           </Link>
@@ -83,7 +86,7 @@ const Navbar = () => {
 
         {/* Mobile Nav */}
         {isOpen && (
-          <div className="md:hidden pb-4 space-y-2 animate-in slide-in-from-top duration-200 bg-background border-t-2 border-foreground mt-2 px-2 pt-2 rounded-b-xl shadow-soft-hard">
+          <div className="md:hidden absolute top-full left-0 right-0 pb-4 space-y-2 animate-in slide-in-from-top duration-200 bg-background border-b-4 border-foreground px-4 pt-2 shadow-hard">
             {navLinks.map((link) => (
               <Link
                 key={link.path}

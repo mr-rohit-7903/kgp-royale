@@ -17,8 +17,8 @@ const HeroSection = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-10 items-center">
           {/* LEFT: Text content */}
-          <div className="text-center lg:text-left max-w-2xl mx-auto lg:mx-0 pl-10">
-            <h1 className="font-outfit font-extrabold text-6xl md:text-8xl text-foreground drop-shadow-[4px_4px_0px_white] mb-2">
+          <div className="text-center lg:text-left max-w-2xl mx-auto lg:mx-0 lg:pl-10">
+            <h1 className="font-outfit font-extrabold text-5xl md:text-8xl text-foreground drop-shadow-[4px_4px_0px_white] mb-2 leading-tight">
               KGP <span className="text-primary">ROYALE</span>
             </h1>
             <h2 className="font-outfit font-bold text-3xl md:text-4xl text-foreground mb-6">
