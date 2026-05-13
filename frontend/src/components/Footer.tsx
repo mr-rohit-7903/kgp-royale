@@ -28,7 +28,7 @@ const Footer = () => {
             <PolicyModal type="privacy" />
             <PolicyModal type="terms" />
             <a 
-              href="https://github.com/mr-rohit-7903/kgp-royale" 
+              href={import.meta.env.VITE_GITHUB_REPO_URL || "#"} 
               target="_blank" 
               rel="noopener noreferrer"
               className="hover:text-primary transition-colors flex items-center gap-2"

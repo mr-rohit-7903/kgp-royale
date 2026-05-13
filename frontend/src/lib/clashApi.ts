@@ -5,16 +5,9 @@
  * and requires an IP-whitelisted API key. We route through a configurable proxy.
  *
  * Set VITE_CLASH_PROXY_URL in .env to your proxy base URL.
- * The proxy should forward requests to https://api.clashroyale.com/v1
- * with the Bearer token attached.
- *
- * If no proxy is configured, we use https://proxy.royaleapi.dev/v1 as a fallback
- * (community-run CORS-friendly proxy for the CR API).
  */
 
-const PROXY_BASE =
-  import.meta.env.VITE_CLASH_PROXY_URL?.replace(/\/$/, "") ||
-  "https://proxy.royaleapi.dev/v1";
+const PROXY_BASE = import.meta.env.VITE_CLASH_PROXY_URL?.replace(/\/$/, "");
 
 const API_KEY = import.meta.env.VITE_CLASH_API_KEY || "";
 
