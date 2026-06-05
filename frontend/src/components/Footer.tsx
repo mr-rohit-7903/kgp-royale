@@ -16,9 +16,6 @@ const Footer = () => {
         <div className="flex flex-col items-center gap-6">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-[hsl(var(--tertiary))] flex items-center justify-center border-4 border-foreground shadow-hard transform -rotate-6 hover:rotate-6 transition-transform">
-              <span className="font-outfit text-foreground text-lg font-black">KR</span>
-            </div>
             <span className="font-outfit font-extrabold text-2xl text-foreground">
               KGP <span className="text-primary">ROYALE</span>
             </span>

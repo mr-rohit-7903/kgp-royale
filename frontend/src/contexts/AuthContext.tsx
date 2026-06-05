@@ -13,6 +13,7 @@ import {
   refreshPlayerStats,
   getUserProfile,
   UserProfile,
+  canSyncProfile,
 } from "@/lib/userService";
 import { ClashPlayerData } from "@/lib/clashApi";
 
@@ -27,6 +28,10 @@ interface AuthContextType {
   signUp: (email: string, password: string, playerTag: string, hall: string, clashData?: ClashPlayerData) => Promise<void>;
   signOut: () => Promise<void>;
   refreshProfile: () => Promise<void>;
+  syncProfile: () => Promise<{ success: boolean; message: string }>;
+  canSync: boolean;
+  nextSyncAt: Date | null;
+  syncing: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -52,6 +57,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
   const [profileLoading, setProfileLoading] = useState(false);
+  const [syncing, setSyncing] = useState(false);
+  const [canSync, setCanSync] = useState(true);
+  const [nextSyncAt, setNextSyncAt] = useState<Date | null>(null);
 
   // Load profile from Firestore when auth state changes
   useEffect(() => {
@@ -74,6 +82,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     });
     return unsubscribe;
   }, []);
+
+  // Recalculate sync eligibility whenever profile changes
+  useEffect(() => {
+    const { canSync: eligible, nextSyncAt: next } = canSyncProfile(profile);
+    setCanSync(eligible);
+    setNextSyncAt(next);
+
+    // If on cooldown, set a timer to auto-unlock when it expires
+    if (next) {
+      const ms = next.getTime() - Date.now();
+      if (ms > 0) {
+        const timer = setTimeout(() => {
+          setCanSync(true);
+          setNextSyncAt(null);
+        }, ms);
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [profile]);
 
   const signIn = async (email: string, password: string) => {
     validateEmailDomain(email);
@@ -138,6 +165,35 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  /**
+   * Manual sync with 2-hour cooldown enforcement.
+   * Returns a result object so the UI can display appropriate feedback.
+   */
+  const syncProfile = async (): Promise<{ success: boolean; message: string }> => {
+    if (!user) return { success: false, message: "Not logged in." };
+
+    const { canSync: eligible, nextSyncAt: next } = canSyncProfile(profile);
+    if (!eligible && next) {
+      const mins = Math.ceil((next.getTime() - Date.now()) / 60000);
+      const h = Math.floor(mins / 60);
+      const m = mins % 60;
+      const timeStr = h > 0 ? `${h}h ${m}m` : `${m}m`;
+      return { success: false, message: `Sync available in ${timeStr}` };
+    }
+
+    setSyncing(true);
+    try {
+      const updated = await refreshPlayerStats(user.uid);
+      setProfile(updated);
+      return { success: true, message: "Stats synced successfully!" };
+    } catch (err) {
+      console.warn("Sync failed:", err);
+      return { success: false, message: "Sync failed. Try again later." };
+    } finally {
+      setSyncing(false);
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -149,6 +205,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
         signUp,
         signOut,
         refreshProfile,
+        syncProfile,
+        canSync,
+        nextSyncAt,
+        syncing,
       }}
     >
       {children}

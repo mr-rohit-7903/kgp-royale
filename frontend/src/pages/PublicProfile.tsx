@@ -75,28 +75,28 @@ const PublicProfile = () => {
     <main className="min-h-screen py-20 bg-background relative overflow-hidden">
       {/* Background effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[hsl(var(--tertiary))] rounded-full mix-blend-multiply filter blur-3xl opacity-20" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[hsl(var(--secondary))] rounded-full mix-blend-multiply filter blur-3xl opacity-20" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[hsl(var(--tertiary))] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[hsl(var(--secondary))] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse [animation-delay:1s]" />
       </div>
 
       <div className="container mx-auto max-w-5xl px-4 relative z-10">
         {/* Header Section */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
           <h1 className="font-outfit font-extrabold text-5xl md:text-7xl text-foreground mb-4 drop-shadow-[4px_4px_0px_white]">
             Warrior <span className="text-primary">Profile</span>
           </h1>
-          <div className="w-32 h-4 bg-primary mx-auto rounded-full border-2 border-foreground shadow-hard" />
+          <div className="w-32 h-4 bg-primary mx-auto rounded-full border-2 border-foreground shadow-hard animate-pulse" />
         </div>
 
         {/* Main Identity Card */}
-        <div className="bg-white border-4 border-foreground rounded-[3rem] shadow-soft-hard p-8 md:p-12 mb-12 relative overflow-hidden group">
+        <div className="bg-white border-4 border-foreground rounded-[3rem] shadow-soft-hard p-8 md:p-12 mb-12 relative overflow-hidden group animate-in fade-in slide-in-from-bottom-8 duration-700 delay-75">
           {/* Subtle pattern background */}
           <div className="absolute inset-0 opacity-5 pointer-events-none bg-[radial-gradient(circle_at_center,_var(--foreground)_1px,_transparent_1px)] bg-[size:24px_24px]" />
           
           <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-12">
             {/* Avatar Section */}
             <div className="relative">
-              <div className="w-32 h-32 md:w-44 md:h-44 rounded-full bg-white border-4 border-foreground shadow-hard overflow-hidden flex items-center justify-center bg-gradient-to-br from-white to-slate-100 transform group-hover:scale-105 transition-transform duration-500">
+              <div className="w-32 h-32 md:w-44 md:h-44 rounded-full bg-white border-4 border-foreground shadow-hard overflow-hidden flex items-center justify-center bg-gradient-to-br from-white to-slate-100 transform group-hover:scale-105 group-hover:rotate-3 transition-all duration-500">
                 {profile.favouriteCardIcon ? (
                   <img src={profile.favouriteCardIcon} alt={profile.favouriteCardName} className="w-full h-full object-cover" />
                 ) : (
@@ -104,7 +104,7 @@ const PublicProfile = () => {
                 )}
               </div>
               {profile.expLevel > 0 && (
-                <div className="absolute -bottom-2 right-4 bg-primary text-primary-foreground font-outfit font-black text-xl px-4 py-1 rounded-full border-4 border-foreground shadow-hard transform rotate-3">
+                <div className="absolute -bottom-2 right-4 bg-primary text-primary-foreground font-outfit font-black text-xl px-4 py-1 rounded-full border-4 border-foreground shadow-hard transform rotate-3 animate-bounce-subtle">
                   Lv.{profile.expLevel}
                 </div>
               )}
@@ -116,13 +116,13 @@ const PublicProfile = () => {
                 <h2 className="font-outfit font-black text-4xl md:text-6xl text-foreground tracking-tight">
                   {profile.playerName}
                 </h2>
-                <div className="inline-flex items-center self-center md:self-auto bg-foreground text-background px-4 py-1 rounded-full font-mono text-sm font-bold shadow-hard">
+                <div className="inline-flex items-center self-center md:self-auto bg-foreground text-background px-4 py-1 rounded-full font-mono text-sm font-bold shadow-hard transform hover:scale-105 transition-transform duration-300">
                   #{profile.playerTag.replace("#", "")}
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 shadow-hard flex items-center gap-4">
+                <div className="bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 shadow-hard flex items-center gap-4 hover:-translate-y-0.5 transition-transform duration-300">
                   <div className="w-12 h-12 rounded-xl bg-[hsl(var(--tertiary))] border-2 border-foreground flex items-center justify-center text-2xl">🏛️</div>
                   <div>
                     <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Hall of Residence</p>
@@ -130,7 +130,7 @@ const PublicProfile = () => {
                   </div>
                 </div>
 
-                <div className="bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 shadow-hard flex items-center gap-4">
+                <div className="bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 shadow-hard flex items-center gap-4 hover:-translate-y-0.5 transition-transform duration-300">
                   <div className="w-12 h-12 rounded-xl bg-[hsl(var(--secondary))] border-2 border-foreground flex items-center justify-center text-2xl text-white">⚔️</div>
                   <div>
                     <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Current Clan</p>
@@ -141,8 +141,8 @@ const PublicProfile = () => {
             </div>
 
             {/* Trophy Display */}
-            <div className="flex flex-col items-center gap-4 bg-white border-4 border-foreground rounded-[2rem] p-8 shadow-hard transform md:rotate-3">
-              <img src="/assets/Trophy.png" alt="Trophy" className="w-20 h-20 drop-shadow-hard" />
+            <div className="flex flex-col items-center gap-4 bg-white border-4 border-foreground rounded-[2rem] p-8 shadow-hard transform md:rotate-3 hover:rotate-0 hover:scale-105 transition-all duration-300">
+              <img src="/assets/Trophy.png" alt="Trophy" className="w-20 h-20 drop-shadow-hard animate-float" />
               <div className="text-center">
                 <p className="font-outfit font-black text-5xl text-foreground">
                   {profile.trophies.toLocaleString()}
@@ -160,30 +160,34 @@ const PublicProfile = () => {
             value={profile.bestTrophies.toLocaleString()}
             label="Best Trophies"
             color="bg-[hsl(var(--tertiary))]"
+            className="animate-in fade-in slide-in-from-bottom-8 duration-500 delay-100"
           />
           <StatCard
             icon="⚔️"
             value={profile.wins.toLocaleString()}
             label="Total Wins"
             color="bg-[hsl(var(--primary))]"
+            className="animate-in fade-in slide-in-from-bottom-8 duration-500 delay-150"
           />
           <StatCard
             icon="👑"
             value={profile.threeCrownWins.toLocaleString()}
             label="3-Crown Wins"
             color="bg-[hsl(var(--quaternary))]"
+            className="animate-in fade-in slide-in-from-bottom-8 duration-500 delay-200"
           />
           <StatCard
             icon="🎯"
             value={`${winRate}%`}
             label="Win Rate"
             color="bg-[hsl(var(--secondary))]"
+            className="animate-in fade-in slide-in-from-bottom-8 duration-500 delay-250"
           />
         </div>
 
         {/* Extended Stats */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-white border-4 border-foreground rounded-[2rem] p-8 shadow-soft-hard">
+          <div className="bg-white border-4 border-foreground rounded-[2rem] p-8 shadow-soft-hard animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300">
             <h3 className="font-outfit font-bold text-2xl mb-6 flex items-center gap-3">
               <span className="w-10 h-10 rounded-lg bg-slate-100 border-2 border-foreground flex items-center justify-center">📊</span>
               Battle Statistics
@@ -196,7 +200,7 @@ const PublicProfile = () => {
             </div>
           </div>
 
-          <div className="bg-white border-4 border-foreground rounded-[2rem] p-8 shadow-soft-hard">
+          <div className="bg-white border-4 border-foreground rounded-[2rem] p-8 shadow-soft-hard animate-in fade-in slide-in-from-bottom-8 duration-700 delay-[350ms]">
             <h3 className="font-outfit font-bold text-2xl mb-6 flex items-center gap-3">
               <span className="w-10 h-10 rounded-lg bg-slate-100 border-2 border-foreground flex items-center justify-center">🌟</span>
               Achievements
@@ -210,12 +214,12 @@ const PublicProfile = () => {
           </div>
         </div>
 
-        <div className="mt-16 text-center">
+        <div className="mt-16 text-center animate-in fade-in slide-in-from-bottom-4 duration-500 delay-500">
           <button 
             onClick={() => navigate("/leaderboard")}
             className="font-outfit font-black text-xl text-muted-foreground hover:text-primary transition-colors flex items-center justify-center gap-2 mx-auto group"
           >
-            <span className="transform group-hover:-translate-x-2 transition-transform">⬅️</span>
+            <span className="transform group-hover:-translate-x-2 transition-transform duration-300">⬅️</span>
             BACK TO LEADERBOARD
           </button>
         </div>
@@ -230,14 +234,16 @@ function StatCard({
   value,
   label,
   color,
+  className,
 }: {
   icon: string;
   value: string;
   label: string;
   color: string;
+  className?: string;
 }) {
   return (
-    <div className="bg-white border-4 border-foreground rounded-[2rem] p-6 shadow-hard transition-all hover:-translate-y-1 hover:shadow-hard-hover">
+    <div className={`bg-white border-4 border-foreground rounded-[2rem] p-6 shadow-hard transition-all duration-300 hover:-translate-y-1 hover:shadow-hard-hover ${className || ""}`}>
       <div className={`w-14 h-14 rounded-2xl ${color} border-2 border-foreground shadow-hard flex items-center justify-center text-3xl mb-4`}>
         {icon}
       </div>

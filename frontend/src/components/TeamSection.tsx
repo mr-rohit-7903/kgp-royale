@@ -32,11 +32,11 @@ const TeamSection = () => {
     <section className="py-24 relative overflow-hidden">
       {/* Background Decor */}
       <div className="absolute top-1/4 left-0 w-72 h-72 bg-[hsl(var(--tertiary))] rounded-full mix-blend-multiply filter blur-[120px] opacity-10 animate-pulse" />
-      <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-[hsl(var(--secondary))] rounded-full mix-blend-multiply filter blur-[150px] opacity-10" />
+      <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-[hsl(var(--secondary))] rounded-full mix-blend-multiply filter blur-[150px] opacity-10 animate-pulse [animation-delay:1s]" />
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Founders Section */}
-        <div className="flex flex-wrap justify-center gap-10 max-w-6xl mx-auto mb-24">
+        <div className="flex flex-wrap justify-center gap-10 max-w-6xl mx-auto mb-24 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-100">
           {Founders.map((founder, index) => (
             <TeamCard key={index} member={founder} isFounder={true} />
           ))}

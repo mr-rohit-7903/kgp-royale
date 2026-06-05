@@ -64,6 +64,7 @@ export interface UserProfile {
   createdAt: Timestamp | null;
   lastUpdated: Timestamp | null;
   lastLoginAt: Timestamp | null;
+  lastSyncedAt: Timestamp | null;
 }
 
 /** Default empty profile */
@@ -95,6 +96,7 @@ function emptyProfile(uid: string, email: string, playerTag: string): UserProfil
     createdAt: null,
     lastUpdated: null,
     lastLoginAt: null,
+    lastSyncedAt: null,
   };
 }
 
@@ -150,6 +152,7 @@ export async function createUserProfile(
     createdAt: serverTimestamp(),
     lastUpdated: serverTimestamp(),
     lastLoginAt: serverTimestamp(),
+    lastSyncedAt: serverTimestamp(),
   };
 
   await setDoc(doc(db, "users", uid), docData);
@@ -211,9 +214,33 @@ export async function refreshPlayerStats(uid: string): Promise<UserProfile | nul
     ...clashFields,
     lastUpdated: serverTimestamp(),
     lastLoginAt: serverTimestamp(),
+    lastSyncedAt: serverTimestamp(),
   });
 
   return { ...existing, ...clashFields };
+}
+
+/** Sync cooldown in milliseconds (2 hours) */
+const SYNC_COOLDOWN_MS = 2 * 60 * 60 * 1000;
+
+/**
+ * Check whether the user can sync again.
+ * Returns { canSync, nextSyncAt } where nextSyncAt is the Date
+ * when syncing will be allowed again (null if allowed now).
+ */
+export function canSyncProfile(profile: UserProfile | null): {
+  canSync: boolean;
+  nextSyncAt: Date | null;
+} {
+  if (!profile?.lastSyncedAt) return { canSync: true, nextSyncAt: null };
+
+  const lastSynced =
+    profile.lastSyncedAt?.toDate ? profile.lastSyncedAt.toDate() : new Date(0);
+  const nextAllowed = new Date(lastSynced.getTime() + SYNC_COOLDOWN_MS);
+  const now = new Date();
+
+  if (now >= nextAllowed) return { canSync: true, nextSyncAt: null };
+  return { canSync: false, nextSyncAt: nextAllowed };
 }
 
 /**

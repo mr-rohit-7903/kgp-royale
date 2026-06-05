@@ -52,25 +52,25 @@ const LeaderboardPage: React.FC = () => {
     <main className="min-h-screen py-20 bg-background relative overflow-hidden">
       {/* Background effects */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[hsl(var(--tertiary))] rounded-full mix-blend-multiply filter blur-3xl opacity-20" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[hsl(var(--secondary))] rounded-full mix-blend-multiply filter blur-3xl opacity-20" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[hsl(var(--tertiary))] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[hsl(var(--secondary))] rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse [animation-delay:1s]" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 animate-in fade-in slide-in-from-bottom-4 duration-500">
           <h1 className="font-outfit font-extrabold text-6xl md:text-8xl text-foreground mb-4 drop-shadow-[4px_4px_0px_white]">
             Hall of <span className="text-primary">Legends</span>
           </h1>
-          <p className="text-muted-foreground font-jakarta font-medium text-xl max-w-2xl mx-auto">
+          <p className="text-muted-foreground font-jakarta font-medium text-xl max-w-2xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500 delay-75">
             The elite warriors of IIT Kharagpur. Every trophy earned is a step towards immortality.
           </p>
-          <div className="w-40 h-4 bg-primary mx-auto rounded-full border-2 border-foreground shadow-hard mt-8" />
+          <div className="w-40 h-4 bg-primary mx-auto rounded-full border-2 border-foreground shadow-hard mt-8 animate-pulse" />
         </div>
 
         <div className="max-w-5xl mx-auto">
           {/* Leaderboard Table */}
-          <div className="bg-card border-4 border-foreground rounded-[2rem] shadow-soft-hard overflow-hidden">
+          <div className="bg-card border-4 border-foreground rounded-[2rem] shadow-soft-hard overflow-hidden animate-in fade-in slide-in-from-bottom-8 duration-700 delay-100">
             {/* Table Header */}
             <div className="bg-white px-8 py-6 border-b-4 border-foreground grid grid-cols-12 gap-4 font-outfit font-bold text-sm text-muted-foreground uppercase tracking-wider">
               <div className="col-span-1">Rank</div>
@@ -97,7 +97,7 @@ const LeaderboardPage: React.FC = () => {
                   </div>
                 ))
               ) : pageData.length === 0 ? (
-                <div className="px-8 py-20 text-center">
+                <div className="px-8 py-20 text-center animate-in fade-in">
                   <div className="text-6xl mb-6">🏜️</div>
                   <h3 className="font-outfit font-bold text-3xl mb-2">The Arena Awaits</h3>
                   <p className="text-muted-foreground font-jakarta font-medium">No warriors have registered for this season yet.</p>
@@ -111,7 +111,8 @@ const LeaderboardPage: React.FC = () => {
                   return (
                     <div
                       key={player.uid}
-                      className={`px-8 py-6 grid grid-cols-12 gap-4 items-center transition-all ${getRankStyle(actualRank)}`}
+                      style={{ animationDelay: `${index * 40}ms` }}
+                      className={`px-8 py-6 grid grid-cols-12 gap-4 items-center transition-all duration-300 ${getRankStyle(actualRank)} animate-in fade-in slide-in-from-left-4`}
                     >
                       <div className="col-span-1 flex items-center">
                         <span className="font-outfit font-black text-2xl opacity-50">#{actualRank}</span>
@@ -120,7 +121,7 @@ const LeaderboardPage: React.FC = () => {
                         to={`/profile/${player.playerTag.replace("#", "")}`}
                         className="col-span-4 flex items-center gap-4 group cursor-pointer hover:translate-x-2 transition-transform"
                       >
-                        <div className="w-14 h-14 flex-shrink-0 bg-white rounded-full border-2 border-foreground shadow-hard overflow-hidden flex items-center justify-center bg-gradient-to-br from-white to-slate-100 group-hover:scale-110 transition-transform">
+                        <div className="w-14 h-14 flex-shrink-0 bg-white rounded-full border-2 border-foreground shadow-hard overflow-hidden flex items-center justify-center bg-gradient-to-br from-white to-slate-100 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                           {player.favouriteCardIcon ? (
                             <img src={player.favouriteCardIcon} alt={player.favouriteCardName} className="w-full h-full object-cover" />
                           ) : (
@@ -154,10 +155,10 @@ const LeaderboardPage: React.FC = () => {
 
           {/* Pagination */}
           {!loading && totalPages > 1 && (
-            <div className="flex items-center justify-center gap-4 mt-12">
+            <div className="flex items-center justify-center gap-4 mt-12 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-200">
               <Button
                 variant="outline"
-                className="w-14 h-14 rounded-full border-4 border-foreground shadow-hard bg-white hover:bg-tertiary transition-all"
+                className="w-14 h-14 rounded-full border-4 border-foreground shadow-hard bg-white hover:bg-tertiary hover:scale-105 hover:shadow-hard-hover active:translate-y-0.5 active:shadow-hard transition-all duration-300"
                 onClick={() => goTo(page - 1)}
                 disabled={page === 1}
               >
@@ -172,7 +173,7 @@ const LeaderboardPage: React.FC = () => {
 
               <Button
                 variant="outline"
-                className="w-14 h-14 rounded-full border-4 border-foreground shadow-hard bg-white hover:bg-tertiary transition-all"
+                className="w-14 h-14 rounded-full border-4 border-foreground shadow-hard bg-white hover:bg-tertiary hover:scale-105 hover:shadow-hard-hover active:translate-y-0.5 active:shadow-hard transition-all duration-300"
                 onClick={() => goTo(page + 1)}
                 disabled={page === totalPages}
               >

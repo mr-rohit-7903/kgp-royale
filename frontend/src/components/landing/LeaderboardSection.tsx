@@ -40,17 +40,17 @@ const LeaderboardSection = () => {
     <section className="py-20 relative">
       <div className="container mx-auto px-4 relative z-10">
         {/* Section Title */}
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 animate-in fade-in slide-in-from-bottom-4 duration-500">
           <h2 className="font-outfit font-extrabold text-5xl md:text-6xl text-foreground mb-4 drop-shadow-[2px_2px_0px_white]">
             Live <span className="text-primary">Leaderboard</span>
           </h2>
-          <div className="w-32 h-4 bg-primary mx-auto rounded-full border-2 border-foreground shadow-hard mt-4" />
+          <div className="w-32 h-4 bg-primary mx-auto rounded-full border-2 border-foreground shadow-hard mt-4 animate-pulse" />
         </div>
 
         <div className="max-w-3xl mx-auto">
 
           {/* Leaderboard */}
-          <div className="bg-card border-4 border-foreground rounded-[2rem] shadow-soft-hard overflow-hidden">
+          <div className="bg-card border-4 border-foreground rounded-[2rem] shadow-soft-hard overflow-hidden animate-in fade-in slide-in-from-bottom-8 duration-700 delay-100">
             {/* Header */}
             <div className="bg-white px-4 md:px-6 py-4 border-b-4 border-foreground grid grid-cols-12 gap-2 md:gap-4 font-outfit font-bold text-xs md:text-sm text-muted-foreground uppercase tracking-wider">
               <div className="col-span-2 md:col-span-1">Rank</div>
@@ -75,7 +75,7 @@ const LeaderboardSection = () => {
                   </div>
                 ))
               ) : players.length === 0 ? (
-                <div className="px-6 py-12 text-center">
+                <div className="px-6 py-12 text-center animate-in fade-in">
                   <p className="text-muted-foreground font-jakarta font-bold text-lg mb-2">The Arena is Empty!</p>
                   <p className="text-sm text-muted-foreground opacity-70">Be the first to join the leaderboard.</p>
                 </div>
@@ -83,7 +83,8 @@ const LeaderboardSection = () => {
                 players.map((player, index) => (
                   <div
                     key={player.uid}
-                    className={`px-4 md:px-6 py-4 grid grid-cols-12 gap-2 md:gap-4 items-center transition-colors ${getRankStyle(index + 1)}`}
+                    style={{ animationDelay: `${index * 50}ms` }}
+                    className={`px-4 md:px-6 py-4 grid grid-cols-12 gap-2 md:gap-4 items-center transition-all duration-300 ${getRankStyle(index + 1)} animate-in fade-in slide-in-from-left-4`}
                   >
                     <div className="col-span-2 md:col-span-1 flex items-center">
                       <span className="font-outfit font-black text-lg md:text-xl opacity-50">#{index + 1}</span>
@@ -92,7 +93,7 @@ const LeaderboardSection = () => {
                       to={`/profile/${player.playerTag.replace("#", "")}`}
                       className="col-span-7 md:col-span-4 flex items-center gap-2 md:gap-3 group cursor-pointer hover:translate-x-1 transition-transform"
                     >
-                      <div className="w-10 h-10 md:w-12 md:h-12 flex-shrink-0 bg-white rounded-full border-2 border-foreground shadow-sm overflow-hidden flex items-center justify-center bg-gradient-to-br from-white to-slate-50 group-hover:scale-105 transition-transform">
+                      <div className="w-10 h-10 md:w-12 md:h-12 flex-shrink-0 bg-white rounded-full border-2 border-foreground shadow-sm overflow-hidden flex items-center justify-center bg-gradient-to-br from-white to-slate-50 group-hover:scale-105 group-hover:rotate-3 transition-all duration-300">
                         {player.favouriteCardIcon ? (
                           <img src={player.favouriteCardIcon} alt={player.favouriteCardName} className="w-full h-full object-cover" />
                         ) : (
@@ -115,14 +116,14 @@ const LeaderboardSection = () => {
               )}
             </div>
           </div>
-          <div className="flex justify-center mt-10">
+          <div className="flex justify-center mt-10 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-300">
             <Link to="/leaderboard">
               <Button
                 size="lg"
                 variant="default"
                 className="font-outfit text-xl px-10 py-6 group bg-primary"
               >
-                <span>🏆</span>
+                <span className="inline-flex items-center justify-center text-inherit group-hover:rotate-12 transition-transform duration-300">🏆</span>
                 <span className="ml-2">View Full Board</span>
               </Button>
             </Link>

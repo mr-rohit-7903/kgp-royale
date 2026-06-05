@@ -28,9 +28,6 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2 md:gap-3 group">
-            <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-[hsl(var(--tertiary))] flex items-center justify-center border-[3px] md:border-4 border-foreground shadow-hard transform -rotate-6 group-hover:rotate-6 transition-transform">
-              <span className="font-outfit text-foreground text-sm md:text-lg font-black">KR</span>
-            </div>
             <span className="font-outfit font-extrabold text-xl md:text-3xl tracking-tight text-foreground">
               KGP <span className="text-primary">ROYALE</span>
             </span>
@@ -96,7 +93,7 @@ const Navbar = () => {
               >
                 <Button
                   variant={isActive(link.path) ? "navActive" : "nav"}
-                  className="w-full justify-start font-title"
+                  className="w-full justify-start font-outfit text-base"
                 >
                   {link.label}
                 </Button>
@@ -111,7 +108,7 @@ const Navbar = () => {
               >
                 <Button
                   variant={isActive("/user/profile") ? "navActive" : "nav"}
-                  className="w-full justify-start font-title"
+                  className="w-full justify-start font-outfit text-base"
                 >
                   <span className="inline-flex items-center justify-center text-inherit">👤</span>
                   {profile?.playerName || "Profile"}
@@ -125,7 +122,7 @@ const Navbar = () => {
               >
                 <Button
                   variant={isActive("/login") ? "navActive" : "nav"}
-                  className="w-full justify-start font-title"
+                  className="w-full justify-start font-outfit text-base"
                 >
                   Login
                 </Button>
