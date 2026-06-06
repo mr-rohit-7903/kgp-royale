@@ -1,10 +1,23 @@
 // src/pages/auth/Register.tsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { fetchPlayerData, ClashPlayerData } from "@/lib/clashApi";
 
 const RegisterPage: React.FC = () => {
+  useEffect(() => {
+    document.title = "Sign Up - KGP Royale";
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute("content", "Create your KGP Royale account to join tournaments, climb the leaderboards, and compete with IIT Kharagpur's finest.");
+    } else {
+      const meta = document.createElement('meta');
+      meta.name = "description";
+      meta.content = "Create your KGP Royale account to join tournaments, climb the leaderboards, and compete with IIT Kharagpur's finest.";
+      document.head.appendChild(meta);
+    }
+  }, []);
+
   const navigate = useNavigate();
   const { signUp } = useAuth();
   const [email, setEmail] = useState("");

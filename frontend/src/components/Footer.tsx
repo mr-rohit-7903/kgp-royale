@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { FaHeart, FaGithub } from "react-icons/fa";
 import {
   Dialog,
@@ -22,6 +23,8 @@ const Footer = () => {
           </div>
 
           <div className="flex flex-wrap justify-center gap-6 text-sm font-jakarta font-bold text-muted-foreground underline decoration-2 underline-offset-4 decoration-slate-200">
+            <Link to="/login" className="hover:text-primary transition-colors">Login</Link>
+            <Link to="/register" className="hover:text-primary transition-colors">Sign Up</Link>
             <PolicyModal type="privacy" />
             <PolicyModal type="terms" />
             <a 

@@ -1,11 +1,24 @@
 // src/pages/auth/Login.tsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 
 const LoginPage: React.FC = () => {
+  useEffect(() => {
+    document.title = "Login - KGP Royale";
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute("content", "Welcome back. Sign in to your KGP Royale account to access your player profile and dashboard.");
+    } else {
+      const meta = document.createElement('meta');
+      meta.name = "description";
+      meta.content = "Welcome back. Sign in to your KGP Royale account to access your player profile and dashboard.";
+      document.head.appendChild(meta);
+    }
+  }, []);
+
   const navigate = useNavigate();
   const { signIn } = useAuth();
   const [email, setEmail] = useState("");

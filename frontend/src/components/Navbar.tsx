@@ -59,14 +59,24 @@ const Navbar = () => {
                 </Link>
               </div>
             ) : (
-              <Link to="/login">
-                <Button
-                  variant={isActive("/login") ? "navActive" : "nav"}
-                  className="font-outfit text-base"
-                >
-                  Login
-                </Button>
-              </Link>
+              <div className="flex items-center gap-2">
+                <Link to="/login">
+                  <Button
+                    variant={isActive("/login") ? "navActive" : "nav"}
+                    className="font-outfit text-base"
+                  >
+                    Login
+                  </Button>
+                </Link>
+                <Link to="/register">
+                  <Button
+                    variant={isActive("/register") ? "navActive" : "nav"}
+                    className="font-outfit text-base"
+                  >
+                    Sign Up
+                  </Button>
+                </Link>
+              </div>
             )}
           </div>
 
@@ -115,18 +125,32 @@ const Navbar = () => {
                 </Button>
               </Link>
             ) : (
-              <Link
-                to="/login"
-                onClick={() => setIsOpen(false)}
-                className="block"
-              >
-                <Button
-                  variant={isActive("/login") ? "navActive" : "nav"}
-                  className="w-full justify-start font-outfit text-base"
+              <div className="space-y-2">
+                <Link
+                  to="/login"
+                  onClick={() => setIsOpen(false)}
+                  className="block"
                 >
-                  Login
-                </Button>
-              </Link>
+                  <Button
+                    variant={isActive("/login") ? "navActive" : "nav"}
+                    className="w-full justify-start font-outfit text-base"
+                  >
+                    Login
+                  </Button>
+                </Link>
+                <Link
+                  to="/register"
+                  onClick={() => setIsOpen(false)}
+                  className="block"
+                >
+                  <Button
+                    variant={isActive("/register") ? "navActive" : "nav"}
+                    className="w-full justify-start font-outfit text-base"
+                  >
+                    Sign Up
+                  </Button>
+                </Link>
+              </div>
             )}
           </div>
         )}
