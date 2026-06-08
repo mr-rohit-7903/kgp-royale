@@ -1,0 +1,3 @@
+# Scripts (contains service account keys and seeder utilities)
+scripts/
+node_modules/

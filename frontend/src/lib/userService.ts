@@ -243,13 +243,84 @@ export function canSyncProfile(profile: UserProfile | null): {
   return { canSync: false, nextSyncAt: nextAllowed };
 }
 
+// ─── Leaderboard Cache ────────────────────────────────────────────────────────
+// Caches leaderboard data in localStorage to reduce Firestore reads.
+// Default TTL: 10 minutes. All consumers (Leaderboard page, Hall of Fame,
+// Landing section) share the same cache.
+
+const LEADERBOARD_CACHE_KEY = "kgp_leaderboard_cache";
+const LEADERBOARD_CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes
+
+interface LeaderboardCache {
+  data: UserProfile[];
+  count: number;
+  timestamp: number;
+}
+
+function getLeaderboardCache(count: number): UserProfile[] | null {
+  try {
+    const raw = localStorage.getItem(LEADERBOARD_CACHE_KEY);
+    if (!raw) return null;
+
+    const cache: LeaderboardCache = JSON.parse(raw);
+    const age = Date.now() - cache.timestamp;
+
+    // Cache is stale
+    if (age > LEADERBOARD_CACHE_TTL_MS) return null;
+
+    // If the requested count is larger than what's cached, refetch
+    if (count > cache.count) return null;
+
+    // Return the requested slice from the cached data
+    return cache.data.slice(0, count);
+  } catch {
+    return null;
+  }
+}
+
+function setLeaderboardCache(data: UserProfile[], count: number): void {
+  try {
+    const cache: LeaderboardCache = {
+      data,
+      count,
+      timestamp: Date.now(),
+    };
+    localStorage.setItem(LEADERBOARD_CACHE_KEY, JSON.stringify(cache));
+  } catch {
+    // localStorage full or unavailable — silently ignore
+  }
+}
+
+/**
+ * Invalidate the leaderboard cache.
+ * Call this after a profile sync so updated trophies are reflected.
+ */
+export function invalidateLeaderboardCache(): void {
+  try {
+    localStorage.removeItem(LEADERBOARD_CACHE_KEY);
+  } catch {
+    // ignore
+  }
+}
+
 /**
  * Fetch top players for the leaderboard.
+ * Results are cached in localStorage for 10 minutes to reduce Firestore reads.
  */
 export async function getTopPlayers(count: number = 8): Promise<UserProfile[]> {
+  // 1. Try serving from cache first
+  const cached = getLeaderboardCache(count);
+  if (cached) return cached;
+
+  // 2. Cache miss — fetch from Firestore
   const usersRef = collection(db, "users");
   const q = query(usersRef, orderBy("trophies", "desc"), limit(count));
   const querySnapshot = await getDocs(q);
   
-  return querySnapshot.docs.map(doc => doc.data() as UserProfile);
+  const players = querySnapshot.docs.map(doc => doc.data() as UserProfile);
+
+  // 3. Store in cache for next time
+  setLeaderboardCache(players, count);
+
+  return players;
 }

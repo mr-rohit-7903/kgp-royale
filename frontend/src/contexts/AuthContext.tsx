@@ -14,6 +14,7 @@ import {
   getUserProfile,
   UserProfile,
   canSyncProfile,
+  invalidateLeaderboardCache,
 } from "@/lib/userService";
 import { ClashPlayerData } from "@/lib/clashApi";
 
@@ -111,6 +112,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     try {
       const updated = await refreshPlayerStats(credential.user.uid);
       setProfile(updated);
+      invalidateLeaderboardCache();
     } catch (err) {
       console.warn("Failed to refresh stats on login:", err);
     } finally {
@@ -185,6 +187,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     try {
       const updated = await refreshPlayerStats(user.uid);
       setProfile(updated);
+      invalidateLeaderboardCache();
       return { success: true, message: "Stats synced successfully!" };
     } catch (err) {
       console.warn("Sync failed:", err);
